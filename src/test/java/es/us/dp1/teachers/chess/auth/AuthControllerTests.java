@@ -30,8 +30,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import es.us.dp1.teachers.chess.auth.AuthController;
-import es.us.dp1.teachers.chess.auth.AuthService;
 import es.us.dp1.teachers.chess.auth.payload.request.LoginRequest;
 import es.us.dp1.teachers.chess.auth.payload.request.SignupRequest;
 import es.us.dp1.teachers.chess.configuration.jwt.JwtUtils;

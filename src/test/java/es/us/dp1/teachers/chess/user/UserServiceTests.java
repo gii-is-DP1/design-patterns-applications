@@ -12,14 +12,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.us.dp1.teachers.chess.exceptions.ResourceNotFoundException;
-import es.us.dp1.teachers.chess.user.AuthoritiesService;
-import es.us.dp1.teachers.chess.user.User;
-import es.us.dp1.teachers.chess.user.UserService;
 
 //@DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 @SpringBootTest

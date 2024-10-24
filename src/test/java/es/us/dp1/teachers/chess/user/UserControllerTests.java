@@ -34,11 +34,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import es.us.dp1.teachers.chess.configuration.SecurityConfiguration;
 import es.us.dp1.teachers.chess.exceptions.AccessDeniedException;
 import es.us.dp1.teachers.chess.exceptions.ResourceNotFoundException;
-import es.us.dp1.teachers.chess.user.Authorities;
-import es.us.dp1.teachers.chess.user.AuthoritiesService;
-import es.us.dp1.teachers.chess.user.User;
-import es.us.dp1.teachers.chess.user.UserRestController;
-import es.us.dp1.teachers.chess.user.UserService;
 
 /**
  * Test class for the {@link VetController}

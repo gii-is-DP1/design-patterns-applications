@@ -5,14 +5,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Locale;
 import java.util.Set;
 
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validator;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-import es.us.dp1.teachers.chess.model.Person;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
 
 /**
  * @author Michael Isvy Simple test to make sure that Bean Validation is working (useful
