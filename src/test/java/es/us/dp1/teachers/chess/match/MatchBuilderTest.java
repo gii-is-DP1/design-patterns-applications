@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
 
 import es.us.dp1.teachers.chess.user.User;
 
-@Disabled
 public class MatchBuilderTest {
     
     private ChessMatchBuilder builder;
@@ -31,6 +30,7 @@ public class MatchBuilderTest {
     }
 
     @Test
+    @Disabled
     public void testTotalNumberOfPieces() {
         // Get the total number of pieces
         int totalPieces = match.getBoard().getPieces().size();
@@ -40,6 +40,7 @@ public class MatchBuilderTest {
     }
     
     @Test
+    @Disabled
     public void testNumberOfPiecesPerType() {
         // Variables to count different types of pieces
         int pawns = 0, rooks = 0, knights = 0, bishops = 0, queens = 0, kings = 0;
@@ -65,6 +66,7 @@ public class MatchBuilderTest {
     }
     
     @Test
+    @Disabled
     public void testInitialPiecePositions() {
         // Verify that rooks are in their correct starting positions
         assertPosition(PieceType.ROOK, PieceColor.WHITE, 1, 1);
@@ -92,6 +94,7 @@ public class MatchBuilderTest {
     }
     
     @Test
+    @Disabled
     public void testInitialPawnPositions() {
         // Verify that all pawns are in their correct positions for white
         for (int i = 1; i <= 8; i++) {
