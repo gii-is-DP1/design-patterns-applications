@@ -1,0 +1,32 @@
+package es.us.dp1.teachers.chess.match;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import es.us.dp1.teachers.chess.model.BaseEntity;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+@EqualsAndHashCode(of={"id"})
+public class ChessBoard extends BaseEntity{
+    boolean creatorTurn;
+    LocalDateTime currentTurnStart;
+    boolean jaque;
+
+    @OneToMany(mappedBy = "board")
+    List<Piece> pieces;
+
+    public void addPiece(Piece piece) {
+        piece.setBoard(this);
+        if(!pieces.contains(piece))
+            pieces.add(piece);
+    }
+
+    
+}

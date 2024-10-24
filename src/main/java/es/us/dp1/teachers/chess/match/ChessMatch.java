@@ -1,0 +1,32 @@
+package es.us.dp1.teachers.chess.match;
+
+import java.time.LocalDateTime;
+
+import es.us.dp1.teachers.chess.model.NamedEntity;
+import es.us.dp1.teachers.chess.user.User;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+@EqualsAndHashCode(of={"id"})
+public class ChessMatch extends NamedEntity {
+    LocalDateTime start;
+    LocalDateTime finish;
+    Long turnDuration;
+    
+    @ManyToOne
+    User creator;
+    
+    @ManyToOne
+    User opponent;
+
+    @OneToOne
+    ChessBoard board;
+    ChessMatchType type;
+}
