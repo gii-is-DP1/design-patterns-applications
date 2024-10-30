@@ -56,20 +56,16 @@ classDiagram
         KNIGHT("Knight", 3)
         PAWN("Pawn", 1)
         +String name
-        +int value
-        +getName() String
-        +getValue() int
-        +toString() String
+        +int value        
     }
 
     BaseEntity <|-- ChessBoard
     NamedEntity <|-- ChessMatch
     BaseEntity <|-- Piece
-
-    ChessMatch --> ChessMatchType
-    ChessMatch --> User
-    ChessMatch --> ChessBoard
-    Piece --> ChessBoard
-    Piece --> PieceType
-    Piece --> PieceColor
+    BaseEntity <|-- NamedEntity
+    
+    
+    ChessMatch "1" --> "1" ChessBoard
+    Piece "0..n" <--> "1" ChessBoard
+    
 ```
