@@ -8,6 +8,8 @@ import es.us.dp1.teachers.chess.user.User;
 
 public interface MatchRepository extends CrudRepository<ChessMatch,Integer>{
 
+    List<ChessMatch> findAll();
+
     List<ChessMatch> findByCreator(User creator);
 
     List<ChessMatch> findByOpponent(User opponent);

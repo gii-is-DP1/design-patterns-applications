@@ -155,7 +155,11 @@
 			<artifactId>maven-model</artifactId>
 			<version>3.9.4</version>
 		</dependency>
-		
+		<dependency>
+            <groupId>org.jpatterns</groupId>
+            <artifactId>jpatterns</artifactId>
+            <version>0.0.1</version>
+        </dependency>
 	</dependencies>
 
 	<build>

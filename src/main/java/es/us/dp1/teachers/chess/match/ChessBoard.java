@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import es.us.dp1.teachers.chess.model.BaseEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.EqualsAndHashCode;
@@ -19,7 +20,7 @@ public class ChessBoard extends BaseEntity{
     LocalDateTime currentTurnStart;
     boolean jaque;
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     List<Piece> pieces;
 
     public void addPiece(Piece piece) {

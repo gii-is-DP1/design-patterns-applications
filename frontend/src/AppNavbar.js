@@ -41,6 +41,9 @@ function AppNavbar() {
         publicLinks = (
             <>
                 <NavItem>
+                    <NavLink style={{ color: "white" }} id="Matches" tag={Link} to="/matches">Matches</NavLink>
+                </NavItem>
+                <NavItem>
                     <NavLink style={{ color: "white" }} id="docs" tag={Link} to="/docs">Docs</NavLink>
                 </NavItem>
                 <NavItem>
@@ -51,7 +54,7 @@ function AppNavbar() {
                 </NavItem>
                 <NavItem>
                     <NavLink style={{ color: "white" }} id="login" tag={Link} to="/login">Login</NavLink>
-                </NavItem>
+                </NavItem>                
             </>
         )
     } else {

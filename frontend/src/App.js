@@ -13,6 +13,8 @@ import tokenService from "./services/token.service";
 import UserListAdmin from "./admin/users/UserListAdmin";
 import UserEditAdmin from "./admin/users/UserEditAdmin";
 import SwaggerDocs from "./public/swagger";
+import Match from "./match/match";
+import ChessMatchList from "./match/matchListing";
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -61,6 +63,8 @@ function App() {
       <>        
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/matches/:match" element={<Match />} />
+        <Route path="/matches" element={<ChessMatchList />} />
       </>
     )
   } else {
@@ -69,6 +73,8 @@ function App() {
         {/* <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} /> */}        
         <Route path="/logout" element={<Logout />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/matches/:match" element={<Match />} />
+        <Route path="/matches" element={<ChessMatchList />} />
       </>
     )
   }

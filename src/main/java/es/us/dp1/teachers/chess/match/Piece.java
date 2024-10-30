@@ -1,5 +1,7 @@
 package es.us.dp1.teachers.chess.match;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import es.us.dp1.teachers.chess.model.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -27,6 +29,7 @@ public class Piece extends BaseEntity{
     Integer yPosition;
 
     @ManyToOne
+    @JsonIgnore
     ChessBoard board;
 
     @Enumerated(EnumType.STRING)

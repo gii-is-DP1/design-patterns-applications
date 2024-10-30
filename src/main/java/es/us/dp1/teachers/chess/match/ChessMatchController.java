@@ -1,7 +1,7 @@
 package es.us.dp1.teachers.chess.match;
 
 import java.util.Optional;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -17,7 +17,7 @@ import es.us.dp1.teachers.chess.user.UserService;
 
 
 @RestController
-@RequestMapping("/api/v1/match")
+@RequestMapping("/api/v1/matches")
 public class ChessMatchController {
 
     UserService userService;
@@ -29,7 +29,10 @@ public class ChessMatchController {
         this.userService=userService;
     }
 
-    
+    @GetMapping()
+    public List<ChessMatch> getMethodName( ) {
+        return matchService.getMatches();
+    }
 
     @PostMapping
     public ResponseEntity<ChessMatch> initializeMatch() {
@@ -42,7 +45,7 @@ public class ChessMatchController {
     }
     
     @GetMapping("/{id}")
-    public ChessMatch getMethodName(@PathVariable("id") Integer matchdId) {
+    public ChessMatch getMethodName(@PathVariable("id") Integer matchdId ) {
         Optional<ChessMatch> match=matchService.getMatchById(matchdId);
         if(!match.isPresent())
             throw new ResourceNotFoundException("Unable to find match with ID:"+matchdId);

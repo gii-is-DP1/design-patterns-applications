@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import es.us.dp1.teachers.chess.model.NamedEntity;
 import es.us.dp1.teachers.chess.user.User;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
@@ -20,13 +21,15 @@ public class ChessMatch extends NamedEntity {
     LocalDateTime finish;
     Long turnDuration;
     
+    ChessMatchType type;
+
     @ManyToOne
     User creator;
     
     @ManyToOne
     User opponent;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     ChessBoard board;
-    ChessMatchType type;
+    
 }
