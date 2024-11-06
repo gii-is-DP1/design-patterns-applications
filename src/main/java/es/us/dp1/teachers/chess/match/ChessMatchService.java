@@ -53,7 +53,7 @@ public class ChessMatchService {
     @Transactional
     public ChessMatch initializeMatch(User user) {
         ChessMatch result = new ChessMatch();
-        ChessBoard board =new ChessBoard();
+        ChessBoard board =new ChessBoard();        
         result.setCreator(user);
         result.setType(ChessMatchType.Standard);
         result.setBoard(board);
@@ -66,6 +66,17 @@ public class ChessMatchService {
     @Transactional(readOnly = true)
     public List<ChessMatch> getMatches() {
         return repo.findAll();
+    }
+
+    @Transactional
+    public ChessMatch useMatchAsExercise(ChessMatch match, User user) {
+        // TODO modify this dummy implementation that just creates a new match
+        return initializeMatch(user);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ChessMatch> getMatchesByCreatorId(User ownerId) {
+        return repo.findByCreator(ownerId);
     }
 
 }

@@ -76,6 +76,12 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
+	@Transactional(readOnly = true)
+	public User getUserById(Integer id) {
+		Optional<User> user = userRepository.findById(id);
+		return user.orElse(null);
+	}
+
 	public Iterable<User> findAllByAuthority(String auth) {
 		return userRepository.findAllByAuthority(auth);
 	}
