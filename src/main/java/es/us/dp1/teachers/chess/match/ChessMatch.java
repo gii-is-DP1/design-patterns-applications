@@ -16,7 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(of={"id"})
-public class ChessMatch extends NamedEntity {
+public class ChessMatch extends NamedEntity implements Cloneable{
     LocalDateTime start;
     LocalDateTime finish;
     Long turnDuration;
@@ -31,5 +31,18 @@ public class ChessMatch extends NamedEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     ChessBoard board;
+
+    public ChessMatch clone() {
+        ChessMatch match = new ChessMatch();
+        match.setName(this.getName());
+        match.setStart(this.getStart());
+        match.setFinish(this.getFinish());
+        match.setTurnDuration(this.getTurnDuration());
+        match.setType(this.getType());
+        match.setCreator(this.getCreator());
+        match.setOpponent(this.getOpponent());
+        match.setBoard(getBoard().clone());
+        return match;
+    }
     
 }

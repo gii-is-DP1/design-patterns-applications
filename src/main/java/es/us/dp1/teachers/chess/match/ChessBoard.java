@@ -1,6 +1,7 @@
 package es.us.dp1.teachers.chess.match;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import es.us.dp1.teachers.chess.model.BaseEntity;
@@ -15,7 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(of={"id"})
-public class ChessBoard extends BaseEntity{
+public class ChessBoard extends BaseEntity implements Cloneable{
     boolean creatorTurn;
     LocalDateTime currentTurnStart;
     boolean jaque;
@@ -27,6 +28,20 @@ public class ChessBoard extends BaseEntity{
         piece.setBoard(this);
         if(!pieces.contains(piece))
             pieces.add(piece);
+    }
+
+    public ChessBoard clone() {
+        ChessBoard board = new ChessBoard();
+        board.setCreatorTurn(this.isCreatorTurn());
+        board.setCurrentTurnStart(this.getCurrentTurnStart());
+        board.setJaque(this.isJaque());
+        board.pieces = new ArrayList<>(pieces.size());
+        for(Piece piece : this.getPieces()) {
+            Piece newPiece=piece.clone();
+            piece.setBoard(board);
+            board.pieces.add(newPiece);
+        }
+        return board;
     }
 
     

@@ -18,7 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(of={"id"})
-public class Piece extends BaseEntity{
+public class Piece extends BaseEntity implements Cloneable{
     
     @Min(1)
     @Max(8)
@@ -37,4 +37,13 @@ public class Piece extends BaseEntity{
     
     @Enumerated(EnumType.STRING)
     PieceColor color;
+
+    public Piece clone() {
+        Piece piece = new Piece();
+        piece.setXPosition(this.getXPosition());
+        piece.setYPosition(this.getYPosition());
+        piece.setType(this.getType());
+        piece.setColor(this.getColor());
+        return piece;
+    }
 }

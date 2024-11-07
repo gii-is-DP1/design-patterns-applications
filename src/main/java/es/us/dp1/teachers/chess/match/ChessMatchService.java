@@ -70,8 +70,10 @@ public class ChessMatchService {
 
     @Transactional
     public ChessMatch useMatchAsExercise(ChessMatch match, User user) {
-        // TODO modify this dummy implementation that just creates a new match
-        return initializeMatch(user);
+        ChessMatch exercise=(ChessMatch) match.clone();
+        exercise.setCreator(user);
+        exercise=save(exercise);
+        return exercise;
     }
 
     @Transactional(readOnly = true)
