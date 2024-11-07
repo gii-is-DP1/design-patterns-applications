@@ -21,48 +21,48 @@
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 
-// This text will be stored with each diagram;  use it for notes.</help_text><element><id>UMLClass</id><coordinates><x>510</x><y>250</y><w>190</w><h>70</h></coordinates><panel_attributes>ChessMatch
+// This text will be stored with each diagram;  use it for notes.</help_text><element><id>UMLClass</id><coordinates><x>610</x><y>340</y><w>190</w><h>70</h></coordinates><panel_attributes>ChessMatch
 --
 start: LocalDateTime
 finish: LocalDateTime
 turnDuration: Long
 type: ChessMatchType
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>570</x><y>30</y><w>100</w><h>60</h></coordinates><panel_attributes>BaseEntity
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>670</x><y>120</y><w>100</w><h>60</h></coordinates><panel_attributes>BaseEntity
 --
 id: int
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>570</x><y>190</y><w>30</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>480</x><y>140</y><w>150</w><h>60</h></coordinates><panel_attributes>NamedEntity
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>670</x><y>280</y><w>30</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>580</x><y>230</y><w>150</w><h>60</h></coordinates><panel_attributes>NamedEntity
 --
 name: String {NotBlank}
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>540</x><y>80</y><w>90</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>70;10;70;40;10;40;10;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>500</x><y>370</y><w>190</w><h>80</h></coordinates><panel_attributes>ChessBoard
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>640</x><y>170</y><w>90</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>70;10;70;40;10;40;10;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>600</x><y>460</y><w>190</w><h>80</h></coordinates><panel_attributes>ChessBoard
 --
 creatorTurn: boolean
 currentTurnStart: LocalDateTime
-jaque: boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>790</x><y>370</y><w>110</w><h>90</h></coordinates><panel_attributes>Piece
+jaque: boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>890</x><y>460</y><w>110</w><h>90</h></coordinates><panel_attributes>Piece
 --
 xPosition: Integer
 yPosition: Integer
 type: PieceType
-color: PieceColor</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>640</x><y>140</y><w>170</w><h>60</h></coordinates><panel_attributes>Authorities
+color: PieceColor</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>740</x><y>230</y><w>170</w><h>60</h></coordinates><panel_attributes>Authorities
 --
-authority: String {NotBlank}</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>810</x><y>30</y><w>190</w><h>60</h></coordinates><panel_attributes>User
+authority: String {NotBlank}</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>910</x><y>120</y><w>190</w><h>60</h></coordinates><panel_attributes>User
 --
 username: String {Length(4,50)}
-password: String {Length(8,50)}</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>740</x><y>50</y><w>90</w><h>110</h></coordinates><panel_attributes>lt=-
+password: String {Length(8,50)}</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>840</x><y>140</y><w>90</w><h>110</h></coordinates><panel_attributes>lt=-
 m1=0..n
 m2=0..n
 
-</panel_attributes><additional_attributes>10;90;10;10;70;10</additional_attributes></element><element><id>Relation</id><coordinates><x>600</x><y>80</y><w>120</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;40;100;40;100;60</additional_attributes></element><element><id>Relation</id><coordinates><x>680</x><y>400</y><w>130</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
-m2=0..n</panel_attributes><additional_attributes>10;10;110;10</additional_attributes></element><element><id>Relation</id><coordinates><x>560</x><y>310</y><w>30</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>Relation</id><coordinates><x>660</x><y>30</y><w>170</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;150;10</additional_attributes></element><element><id>Relation</id><coordinates><x>690</x><y>80</y><w>200</w><h>210</h></coordinates><panel_attributes>lt=&lt;-
+</panel_attributes><additional_attributes>10;90;10;10;70;10</additional_attributes></element><element><id>Relation</id><coordinates><x>700</x><y>170</y><w>120</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;40;100;40;100;60</additional_attributes></element><element><id>Relation</id><coordinates><x>780</x><y>490</y><w>130</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m2=0..n</panel_attributes><additional_attributes>10;10;110;10</additional_attributes></element><element><id>Relation</id><coordinates><x>660</x><y>400</y><w>30</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>Relation</id><coordinates><x>760</x><y>120</y><w>170</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;150;10</additional_attributes></element><element><id>Relation</id><coordinates><x>790</x><y>170</y><w>200</w><h>210</h></coordinates><panel_attributes>lt=&lt;-
 m1=0..n \ncreator
-</panel_attributes><additional_attributes>140;10;140;190;10;190</additional_attributes></element><element><id>Relation</id><coordinates><x>690</x><y>80</y><w>260</w><h>250</h></coordinates><panel_attributes>lt=&lt;-
-m1=0..n \nopponent</panel_attributes><additional_attributes>190;10;190;230;10;230</additional_attributes></element><element><id>UMLClass</id><coordinates><x>920</x><y>220</y><w>70</w><h>70</h></coordinates><panel_attributes>&lt;&lt;Enum&gt;&gt;
+</panel_attributes><additional_attributes>140;10;140;190;10;190</additional_attributes></element><element><id>Relation</id><coordinates><x>790</x><y>170</y><w>260</w><h>250</h></coordinates><panel_attributes>lt=&lt;-
+m1=0..n \nopponent</panel_attributes><additional_attributes>190;10;190;230;10;230</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1020</x><y>310</y><w>70</w><h>70</h></coordinates><panel_attributes>&lt;&lt;Enum&gt;&gt;
 PieceColor
 --
 WHITE
-BLACK</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>920</x><y>330</y><w>70</w><h>130</h></coordinates><panel_attributes>&lt;&lt;Enum&gt;&gt;
+BLACK</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1020</x><y>420</y><w>70</w><h>130</h></coordinates><panel_attributes>&lt;&lt;Enum&gt;&gt;
 PieceType
 --
 KING
@@ -70,4 +70,25 @@ QUEEN
 ROOK
 BISHOP
 KNIGHT
-PAWN</panel_attributes><additional_attributes></additional_attributes></element></diagram>
+PAWN</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>110</x><y>310</y><w>300</w><h>120</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+ChessMatchBuilder
+--
+withCreator(User creator):ChessMatchBuilder
+withOpponent(User opponent): ChessMatchBuilder
+withStart(LocalDateTime start): ChessMatchBuilder
+withName(String ame): ChessMatchBuilder
+build(): ChessMatch 
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>220</x><y>230</y><w>310</w><h>70</h></coordinates><panel_attributes>ChessMatchBuilderDirector
+--
+--
+ofType(ChessMatchType type): ChessMatchBuilder
+getSupportedMatchTypes(): Set&lt;ChessMatchType&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>170</x><y>180</y><w>150</w><h>30</h></coordinates><panel_attributes>ChessMatchController
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>380</x><y>180</y><w>140</w><h>30</h></coordinates><panel_attributes>ChessMatchService</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>310</x><y>190</y><w>90</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>70;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>440</x><y>200</y><w>30</w><h>50</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;30;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>240</x><y>470</y><w>170</w><h>30</h></coordinates><panel_attributes>StandardChessMatchBuilder</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>170</x><y>510</y><w>170</w><h>30</h></coordinates><panel_attributes>SpeedyChessMatchBuilder</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>110</x><y>550</y><w>170</w><h>30</h></coordinates><panel_attributes>CheckersMatchBuilder</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>350</x><y>420</y><w>30</w><h>70</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>210</x><y>420</y><w>30</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>140</x><y>420</y><w>30</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;130</additional_attributes></element><element><id>Relation</id><coordinates><x>390</x><y>290</y><w>100</w><h>200</h></coordinates><panel_attributes>lt=.&gt;
+&lt;&lt;uses&gt;&gt;</panel_attributes><additional_attributes>70;10;10;180</additional_attributes></element><element><id>Relation</id><coordinates><x>330</x><y>290</y><w>200</w><h>260</h></coordinates><panel_attributes>lt=.&gt;
+&lt;&lt;uses&gt;&gt;</panel_attributes><additional_attributes>150;10;140;240;10;240</additional_attributes></element><element><id>Relation</id><coordinates><x>270</x><y>290</y><w>310</w><h>300</h></coordinates><panel_attributes>lt=.&gt;
+&lt;&lt;uses&gt;&gt;</panel_attributes><additional_attributes>250;10;250;280;10;280</additional_attributes></element><element><id>UMLNote</id><coordinates><x>250</x><y>100</y><w>370</w><h>70</h></coordinates><panel_attributes>ChessMatch result = builder.ofType(ChessMatchType.Standard)
+                                    .withCreator(user)                                    
+                                    .build();
+result=save(result);
+return result;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>450</x><y>160</y><w>50</w><h>40</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;30;20</additional_attributes></element></diagram>
