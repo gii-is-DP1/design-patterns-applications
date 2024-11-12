@@ -18,7 +18,7 @@ INSERT INTO appusers(id,username,password,authority) VALUES (13,'player10','$2a$
 -- Famous Chess Match 1: "The Immortal Game" - Anderssen vs. Kieseritzky, 1851
 INSERT INTO chess_board (id, creator_turn, jaque, current_turn_start) VALUES (1, 0, 0, null);
 INSERT INTO chess_match (id, name, creator_id, opponent_id, board_id, type, finish, start, turn_duration) VALUES 
-    (1, 'The Immortal Match, Anderssen vs Kieseritzky 1851', 4, 5, 1, 0, null, null, 600);
+    (1, 'The Immortal Match, Anderssen vs Kieseritzky 1851', null, 5, 1, 0, null, null, 600);
 
 -- Pieces in the "Immortal Game" (near the famous position before Anderssen's sacrifices)
 INSERT INTO Piece(id, type, color, x_position, y_position, board_id) VALUES 
@@ -42,7 +42,7 @@ INSERT INTO Piece(id, type, color, x_position, y_position, board_id) VALUES
 -- Famous Chess Match 2: "Game of the Century" - Donald Byrne vs. Bobby Fischer, 1956
 INSERT INTO chess_board (id, creator_turn, jaque, current_turn_start) VALUES (2, 0, 0, null);
 INSERT INTO chess_match (id, name, creator_id, opponent_id, board_id, type, finish, start, turn_duration) VALUES 
-    (2, 'Game of the Century, Byrne vs Fischer, 1956',4, 5, 2, 0, null, null, 600);
+    (2, 'Game of the Century, Byrne vs Fischer, 1956',null, 5, 2, 0, null, null, 600);
 
 -- Piece positions in the "Game of the Century (Donald Byrne vs. Bobby Fischer, 1956)"
 INSERT INTO Piece(id, type, color, x_position, y_position, board_id) VALUES 
@@ -64,7 +64,7 @@ INSERT INTO Piece(id, type, color, x_position, y_position, board_id) VALUES
 -- Famous Chess Match 3: "Opera Game" - Morphy vs. Duke Karl/Count Isouard, 1858
 INSERT INTO chess_board (id, creator_turn, jaque, current_turn_start) VALUES (3, 0, 0, null);
 INSERT INTO chess_match (id, name, creator_id, opponent_id, board_id, type, finish, start, turn_duration) VALUES 
-    (3, 'Opera Game, Morphy vs Isouard, 1858', 8, 9, 3, 0, null, null, 600);
+    (3, 'Opera Game, Morphy vs Isouard, 1858', null, 9, 3, 0, null, null, 600);
 
 -- Piece positions in the "Opera Game" 
 INSERT INTO Piece(id, type, color, x_position, y_position, board_id) VALUES 
@@ -84,7 +84,7 @@ INSERT INTO Piece(id, type, color, x_position, y_position, board_id) VALUES
 -- Famous Chess Match 4: "Deep Blue vs. Garry Kasparov" - IBM Deep Blue, 1997
 INSERT INTO chess_board (id, creator_turn, jaque, current_turn_start) VALUES (4, 0, 0, null);
 INSERT INTO chess_match (id, name, creator_id, opponent_id, board_id, type, finish, start, turn_duration) VALUES 
-    (4, 'Deep Blue vs. Kasparov, 1997', 4, 5, 4, 0, null, null, 600);
+    (4, 'Deep Blue vs. Kasparov, 1997', null, 5, 4, 0, null, null, 600);
 
 -- Piece positions in "Deep Blue vs. Kasparov"
 INSERT INTO Piece(id, type, color, x_position, y_position, board_id) VALUES 
@@ -101,7 +101,7 @@ INSERT INTO Piece(id, type, color, x_position, y_position, board_id) VALUES
 -- Chess Opening 1: Ruy López Opening
 INSERT INTO chess_board (id, creator_turn, jaque, current_turn_start) VALUES (6, 0, 0, null);
 INSERT INTO chess_match (id, name, creator_id, opponent_id, board_id, type, finish, start, turn_duration) VALUES 
-    (6, 'Ruy Lopez Opening', 4, 5, 6, 0, null, null, 600);
+    (6, 'Ruy Lopez Opening', null, 5, 6, 0, null, null, 600);
 
 -- Position for Ruy López Opening (1.e4 e5 2.Nf3 Nc6 3.Bb5)
 INSERT INTO Piece(id, type, color, x_position, y_position, board_id) VALUES 
@@ -125,7 +125,7 @@ INSERT INTO Piece(id, type, color, x_position, y_position, board_id) VALUES
 -- Chess Opening 2: Sicilian Defense
 INSERT INTO chess_board (id, creator_turn, jaque, current_turn_start) VALUES (7, 0, 0, null);
 INSERT INTO chess_match (id, name, creator_id, opponent_id, board_id, type, finish, start, turn_duration) VALUES 
-    (7, 'Sicilian Defense', 4, 6, 7, 0, null, null, 600);
+    (7, 'Sicilian Defense', null, 6, 7, 0, null, null, 600);
 
 -- Position for Sicilian Defense (1.e4 c5)
 INSERT INTO Piece(id, type, color, x_position, y_position, board_id) VALUES 
@@ -142,7 +142,7 @@ INSERT INTO Piece(id, type, color, x_position, y_position, board_id) VALUES
 -- Chess Opening 3: French Defense
 INSERT INTO chess_board (id, creator_turn, jaque, current_turn_start) VALUES (8, 0, 0, null);
 INSERT INTO chess_match (id, name, creator_id, opponent_id, board_id, type, finish, start, turn_duration) VALUES 
-    (8, 'French Defense', 5, 6, 8, 0, null, null, 600);
+    (8, 'French Defense', null, 6, 8, 0, null, null, 600);
 
 -- Position for French Defense (1.e4 e6)
 INSERT INTO Piece(id, type, color, x_position, y_position, board_id) VALUES 
@@ -156,7 +156,7 @@ INSERT INTO Piece(id, type, color, x_position, y_position, board_id) VALUES
 -- Chess Opening 4: Queen’s Gambit
 INSERT INTO chess_board (id, creator_turn, jaque, current_turn_start) VALUES (9, 0, 0, null);
 INSERT INTO chess_match (id, name, creator_id, opponent_id, board_id, type, finish, start, turn_duration) VALUES 
-    (9, 'Queens Gambit', 7, 8, 9, 0, null, null, 600);
+    (9, 'Queens Gambit', null, 8, 9, 0, null, null, 600);
 
 -- Position for Queen’s Gambit (1.d4 d5 2.c4)
 INSERT INTO Piece(id, type, color, x_position, y_position, board_id) VALUES 
@@ -171,7 +171,7 @@ INSERT INTO Piece(id, type, color, x_position, y_position, board_id) VALUES
 -- Chess Opening 5: King’s Indian Defense
 INSERT INTO chess_board (id, creator_turn, jaque, current_turn_start) VALUES (10, 0, 0, null);
 INSERT INTO chess_match (id, name, creator_id, opponent_id, board_id, type, finish, start, turn_duration) VALUES 
-    (10, 'Kings Indian Defense', 9, 10, 10, 0, null, null, 600);
+    (10, 'Kings Indian Defense', null, 10, 10, 0, null, null, 600);
 
 -- Position for King’s Indian Defense (1.d4 Nf6 2.c4 g6)
 INSERT INTO Piece(id, type, color, x_position, y_position, board_id) VALUES 
