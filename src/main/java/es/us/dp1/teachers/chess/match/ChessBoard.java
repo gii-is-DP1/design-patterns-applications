@@ -38,7 +38,7 @@ public class ChessBoard extends BaseEntity implements Cloneable{
         board.pieces = new ArrayList<>(pieces.size());
         for(Piece piece : this.getPieces()) {
             Piece newPiece=piece.clone();
-            piece.setBoard(board);
+            newPiece.setBoard(board);
             board.pieces.add(newPiece);
         }
         return board;
