@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import tokenService from '../services/token.service';
-import { useLocation } from "react-router-dom"
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router";
 import './Game.css';
 
 const apiUrl = "/api/v1";
@@ -29,6 +30,7 @@ function Match() {
     
 
     const location = useLocation();
+    const navigate = useNavigate();
     
 
 
@@ -72,6 +74,7 @@ function Match() {
                 // Handle the response, setting pieces or match state as needed
                 setMatchName(json.name);
                 setPieces(json.board.pieces);
+                navigate("/matches/"+json.id,{ replace: true} );
                 setInicializado("true");
             })
             .catch(error => console.error("Error creating match:", error));
