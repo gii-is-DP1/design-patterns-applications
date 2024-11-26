@@ -44,6 +44,15 @@ public class ExceptionHandlerController {
 		return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
 	}
 
+    @ExceptionHandler(IllegalMoveException.class)
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	public ResponseEntity<ErrorMessage> illegalMoveException(IllegalMoveException ex, WebRequest request) {
+		ErrorMessage message = new ErrorMessage(HttpStatus.BAD_REQUEST.value(), new Date(), ex.getMessage(),
+				request.getDescription(false));
+
+		return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+	}
+
 //	@ExceptionHandler(value = TokenRefreshException.class)
 //	@ResponseStatus(HttpStatus.FORBIDDEN)
 //	public ResponseEntity<ErrorMessage> handleTokenRefreshException(TokenRefreshException ex, WebRequest request) {
@@ -51,8 +60,8 @@ public class ExceptionHandlerController {
 //				request.getDescription(false));
 //
 //		return new ResponseEntity<ErrorMessage>(message, HttpStatus.FORBIDDEN);
-//	}	
-	
+//	}
+
 
 	@ExceptionHandler(value = MethodArgumentNotValidException.class)
 	public final ResponseEntity<ErrorMessage> handleMethodArgumentException(MethodArgumentNotValidException ex,

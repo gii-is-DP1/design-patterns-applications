@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import tokenService from '../services/token.service';
+import getErrorModal from '../util/getErrorModal'
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router";
 import './Game.css';
@@ -33,7 +34,8 @@ function Match() {
     const [toX, setToX] = useState();
     const [toY, setToY] = useState();
     
-    
+    const [message, setMessage] = useState(null);
+    const [visible, setVisible] = useState(false);
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -118,7 +120,12 @@ function Match() {
         fetch(url, {method: "PUT", headers: { "Authorization": `Bearer  ${token}`}})
             .then(response => response.json())
             .then(json => {
-                setPieces(json.board.pieces);
+                if (json.message) {
+                    setMessage(json.message);
+                    setVisible(true);
+                } else {
+                    setPieces(json.board.pieces);
+                }
             })
             .catch(error => console.error("Error fetching match:", error));
      }
@@ -139,6 +146,7 @@ function Match() {
 
     const finTiempo = () => { }
 
+    const modal = getErrorModal(setVisible, visible, message);
 
     return (
         <React.Fragment>
@@ -147,7 +155,8 @@ function Match() {
                     <h1 style={{ textAlign: 'center' }}>Cargando tablero... </h1>
                 </div>
             }
-            <div className="container">                
+            <div className="container">
+                {modal}               
                 <hr></hr>
                 <img id="source" src={require('../static/images/tablero.png')} alt="alt" style={{ display: 'none' }} />
                 <img id="KNIGHT-BLACK" src={require('../static/images/HORSE-BLACK.png')} alt="alt" style={{ display: 'none' }} />
