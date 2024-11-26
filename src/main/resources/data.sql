@@ -183,3 +183,43 @@ INSERT INTO Piece(id, type, color, x_position, y_position, board_id) VALUES
     (120, 'KNIGHT', 'BLACK', 6, 6, 10), -- Nf6
     (121, 'PAWN', 'BLACK', 6, 7, 10), -- g6
     (122, 'QUEEN', 'BLACK', 4, 8, 10);
+
+-- Test Game between player1 and player2
+INSERT INTO chess_board (id, creator_turn, jaque, current_turn_start) VALUES (100, 1, 0, null);
+INSERT INTO chess_match (id, name, creator_id, opponent_id, board_id, type, finish, start, turn_duration) VALUES 
+    (100, 'Test Game', 4, 5, 100, 0, null, null, 600);
+
+-- Position for Test Game
+INSERT INTO Piece(id, type, color, x_position, y_position, board_id) VALUES 
+    (123, 'ROOK',   'WHITE', 1, 1, 100),
+    (124, 'KNIGHT', 'WHITE', 2, 1, 100),
+    (125, 'BISHOP', 'WHITE', 3, 1, 100),
+    (126, 'QUEEN',  'WHITE', 4, 1, 100),
+    (127, 'KING',   'WHITE', 5, 1, 100),
+    (128, 'BISHOP', 'WHITE', 6, 1, 100),
+    (129, 'KNIGHT', 'WHITE', 7, 1, 100),
+    (130, 'ROOK',   'WHITE', 8, 1, 100),
+    (131, 'PAWN',   'WHITE', 1, 2, 100),
+    (132, 'PAWN',   'WHITE', 2, 2, 100),
+    (133, 'PAWN',   'WHITE', 3, 2, 100),
+    (134, 'PAWN',   'WHITE', 4, 2, 100),
+    (135, 'PAWN',   'WHITE', 5, 2, 100),
+    (136, 'PAWN',   'WHITE', 6, 2, 100),
+    (137, 'PAWN',   'WHITE', 7, 2, 100),
+    (138, 'PAWN',   'WHITE', 8, 2, 100),
+    (139, 'ROOK',   'BLACK', 1, 8, 100),
+    (140, 'KNIGHT', 'BLACK', 2, 8, 100),
+    (141, 'BISHOP', 'BLACK', 3, 8, 100),
+    (142, 'QUEEN',  'BLACK', 4, 8, 100),
+    (143, 'KING',   'BLACK', 5, 8, 100),
+    (144, 'BISHOP', 'BLACK', 6, 8, 100),
+    (145, 'KNIGHT', 'BLACK', 7, 8, 100),
+    (146, 'ROOK',   'BLACK', 8, 8, 100),
+    (147, 'PAWN',   'BLACK', 1, 7, 100),
+    (148, 'PAWN',   'BLACK', 2, 7, 100),
+    (149, 'PAWN',   'BLACK', 3, 7, 100),
+    (150, 'PAWN',   'BLACK', 4, 7, 100),
+    (151, 'PAWN',   'BLACK', 5, 7, 100),
+    (152, 'PAWN',   'BLACK', 6, 7, 100),
+    (153, 'PAWN',   'BLACK', 7, 7, 100),
+    (154, 'PAWN',   'BLACK', 8, 7, 100);

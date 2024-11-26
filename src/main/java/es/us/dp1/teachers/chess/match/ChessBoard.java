@@ -30,6 +30,23 @@ public class ChessBoard extends BaseEntity implements Cloneable{
             pieces.add(piece);
     }
 
+    public Piece getPieceAt(int x, int y) {
+        for(Piece piece : pieces) {
+            if(piece.getXPosition()==x && piece.getYPosition()==y)
+                return piece;
+        }
+        return null;
+    }
+
+    public Piece movePiece(int fromX, int fromY, int toX, int toY) {
+        Piece target = getPieceAt(fromX, fromY);
+        if(target!=null) {
+            target.setXPosition(toX);
+            target.setYPosition(toY);
+        }
+        return target;
+    }
+
     public ChessBoard clone() {
         ChessBoard board = new ChessBoard();
         board.setCreatorTurn(this.isCreatorTurn());
@@ -44,5 +61,5 @@ public class ChessBoard extends BaseEntity implements Cloneable{
         return board;
     }
 
-    
+
 }

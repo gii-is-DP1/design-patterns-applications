@@ -27,6 +27,12 @@ function Match() {
     const [finPartida, setFinPartida] = useState(false);
 
     const [inicializado, setInicializado] = useState("false");
+
+    const [fromX, setFromX] = useState();
+    const [fromY, setFromY] = useState();
+    const [toX, setToX] = useState();
+    const [toY, setToY] = useState();
+    
     
 
     const location = useLocation();
@@ -102,11 +108,32 @@ function Match() {
 
     const handleButton = () => { }
 
-    const refresco = () => { }
+    const refresco = () => {
 
-    const mover = () => { }
+     }
 
-    const oMousePos = (evt) => { }
+    const mover = () => {
+        const token  = tokenService.getLocalAccessToken();
+        let url = apiUrl + location.pathname + "/move?fromX=" + fromX + "&fromY=" + fromY + "&toX=" + toX + "&toY=" + toY;
+        fetch(url, {method: "PUT", headers: { "Authorization": `Bearer  ${token}`}})
+            .then(response => response.json())
+            .then(json => {
+                setPieces(json.board.pieces);
+            })
+            .catch(error => console.error("Error fetching match:", error));
+     }
+
+    const oMousePos = (evt) => { 
+
+        var canvas = document.getElementById("canvas");
+        var rect = canvas.getBoundingClientRect();
+        var x = evt.clientX - rect.left;
+        var y = evt.clientY - rect.top;
+        var x1 = Math.floor(x / 100) + 1;
+        var y1 = Math.floor(y / 100) + 1;
+        console.log("x: " + x1 + " y: " + y1);
+        //mover(x1, y1);
+    }
 
     async function InicioTurno() { }
 
@@ -122,7 +149,6 @@ function Match() {
             }
             <div className="container">                
                 <hr></hr>
-                <h1 style={{ marginTop: "200px" }}>Match: {matchName}</h1>
                 <img id="source" src={require('../static/images/tablero.png')} alt="alt" style={{ display: 'none' }} />
                 <img id="KNIGHT-BLACK" src={require('../static/images/HORSE-BLACK.png')} alt="alt" style={{ display: 'none' }} />
                 <img id="KNIGHT-WHITE" src={require('../static/images/HORSE-WHITE.png')} alt="alt" style={{ display: 'none' }} />
@@ -138,14 +164,33 @@ function Match() {
                 <img id="QUEEN-BLACK" src={require('../static/images/QUEEN-BLACK.png')} alt="alt" style={{ display: 'none' }} />
                 
                 <h1 id="msg"></h1>
-                
-                <canvas id="canvas" width={800} height={800} onClick={oMousePos} style={{ marginTop: "800px" }}> </canvas>
+
+                <div style={{ marginTop: "100px" }}>
+                    <label>
+                        From column:
+                        <input type="number" name="fromX" min={1} max={8} value={fromX} onChange={(e) => {setFromX(e.target.value)}} />
+                    </label>&nbsp;&nbsp;
+                    <label>
+                        From row:
+                        <input type="number" name="fromY" min={1} max={8} value={fromY} onChange={(e) => {setFromY(e.target.value)}} />
+                    </label><br></br>
+                    <label>
+                        To column:
+                        <input type="number" name="toX" min={1} max={8} value={toX} onChange={(e) => {setToX(e.target.value)}} />
+                    </label>&nbsp;&nbsp;
+                    <label>
+                        To row:
+                        <input type="number" name="toY" min={1} max={8} value={toY} onChange={(e) => {setToY(e.target.value)}} />
+                    </label>
+                    <div>
+                    <button onClick={mover}>Move!</button>    
+                </div>    
+                </div>
+                    
+                <canvas id="canvas" width={800} height={800} onClick={oMousePos} style={{ marginTop: "1100px" }}> </canvas>
 
                 {inicializado === "true" &&
                     <div>
-                        <p>
-                            
-                        </p>
                         <p>
                             <DrawBoard />
                         </p>

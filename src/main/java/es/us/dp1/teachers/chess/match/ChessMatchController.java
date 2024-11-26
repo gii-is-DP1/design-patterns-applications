@@ -8,6 +8,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +32,7 @@ public class ChessMatchController {
     }
 
     @GetMapping()
-    public List<ChessMatch> getMatches(@RequestParam(name="ownerId", required=false) Integer ownerId) {        
+    public List<ChessMatch> getMatches(@RequestParam(name="ownerId", required=false) Integer ownerId) {
         User user=null;
         if(ownerId==null)
             user=userService.findCurrentUser();
@@ -42,18 +43,18 @@ public class ChessMatchController {
 
     @PostMapping
     public ResponseEntity<ChessMatch> createMatch(@RequestParam(name="matchToUseAsExercise", required=false) Integer matchToUseAsExerciseId) {
-        
+
         User user=userService.findCurrentUser();
         if(user==null)
             throw new BadCredentialsException("We could not find the current user");
         ChessMatch match=null;
-        if(matchToUseAsExerciseId!=null)   // We create a match for the user as a copy or the match with the given ID   
-            match=matchService.useMatchAsExercise(getMatch(matchToUseAsExerciseId),user); 
+        if(matchToUseAsExerciseId!=null)   // We create a match for the user as a copy or the match with the given ID
+            match=matchService.useMatchAsExercise(getMatch(matchToUseAsExerciseId),user);
         else                               // We create a new match for the user
-            match= matchService.initializeMatch(user);                
+            match= matchService.initializeMatch(user);
         return ResponseEntity.ok(match);
     }
-    
+
     @GetMapping("/{id}")
     public ChessMatch getMatch(@PathVariable("id") Integer matchdId ) {
         Optional<ChessMatch> match=matchService.getMatchById(matchdId);
@@ -61,5 +62,12 @@ public class ChessMatchController {
             throw new ResourceNotFoundException("Unable to find match with ID:"+matchdId);
         return match.get();
     }
-    
+
+    @PutMapping("/{id}/move")
+    public ChessMatch movePiece(@PathVariable("id") Integer matchId, @RequestParam("fromX") int fromX, @RequestParam("fromY") int fromY, @RequestParam("toX") int toX, @RequestParam("toY") int toY) {
+        ChessMatch match=getMatch(matchId);
+        matchService.movePiece(match, fromX, fromY, toX, toY);
+        return match;
+    }
+
 }

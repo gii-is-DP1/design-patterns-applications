@@ -17,11 +17,11 @@ import es.us.dp1.teachers.chess.user.User;
 public class ChessMatchService {
 
     ChessMatchBuilderDirector builder;
-    MatchRepository repo;    
+    MatchRepository repo;
 
     @Autowired
     public ChessMatchService(MatchRepository repo, ChessMatchBuilderDirector builder) {
-        this.repo = repo;        
+        this.repo = repo;
         this.builder = builder;
     }
 
@@ -51,12 +51,12 @@ public class ChessMatchService {
     public ChessMatch save(ChessMatch m) {
         return repo.save(m);
     }
-    
+
     @Transactional
     public ChessMatch initializeMatch(User user) {
-        
+
         ChessMatch result = builder.ofType(ChessMatchType.Standard)
-                                    .withCreator(user)                                    
+                                    .withCreator(user)
                                     .build();
         result=save(result);
         return result;
@@ -78,6 +78,12 @@ public class ChessMatchService {
     @Transactional(readOnly = true)
     public List<ChessMatch> getMatchesByCreatorId(User ownerId) {
         return repo.findByCreator(ownerId);
+    }
+
+    @Transactional
+    public void movePiece(ChessMatch match, int x1, int y1, int x2, int y2) {
+        match.getBoard().movePiece(x1, y1, x2, y2);
+        save(match);
     }
 
 }
