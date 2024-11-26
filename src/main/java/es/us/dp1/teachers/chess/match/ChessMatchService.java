@@ -10,19 +10,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.us.dp1.teachers.chess.exceptions.IllegalMoveException;
 import es.us.dp1.teachers.chess.match.builder.ChessMatchBuilderDirector;
 import es.us.dp1.teachers.chess.user.User;
+import es.us.dp1.teachers.chess.user.UserService;
 
 @Service
 public class ChessMatchService {
 
     ChessMatchBuilderDirector builder;
     MatchRepository repo;
+    UserService userService;
 
     @Autowired
-    public ChessMatchService(MatchRepository repo, ChessMatchBuilderDirector builder) {
+    public ChessMatchService(MatchRepository repo, ChessMatchBuilderDirector builder, UserService userService) {
         this.repo = repo;
         this.builder = builder;
+        this.userService = userService;
     }
 
     @Transactional(readOnly = true)
@@ -82,6 +86,11 @@ public class ChessMatchService {
 
     @Transactional
     public void movePiece(ChessMatch match, int x1, int y1, int x2, int y2) {
+        User user = userService.findCurrentUser();
+        if ( (match.getCreator().equals(user) && !match.getBoard().isCreatorTurn()) ||
+             (match.getOpponent().equals(user) && match.getBoard().isCreatorTurn()) ||
+             (!match.getCreator().equals(user) && !match.getOpponent().equals(user)) )
+            throw new IllegalMoveException("It is not your turn!");
         match.getBoard().movePiece(x1, y1, x2, y2);
         save(match);
     }

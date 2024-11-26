@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.us.dp1.teachers.chess.exceptions.IllegalMoveException;
 import es.us.dp1.teachers.chess.model.BaseEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -41,9 +42,14 @@ public class ChessBoard extends BaseEntity implements Cloneable{
     public Piece movePiece(int fromX, int fromY, int toX, int toY) {
         Piece target = getPieceAt(fromX, fromY);
         if(target!=null) {
+            if((target.getColor().equals(PieceColor.WHITE) && !isCreatorTurn()) ||
+                    (target.getColor().equals(PieceColor.BLACK) && isCreatorTurn()))
+                throw new IllegalMoveException("You cannot move other player's pieces");
             target.setXPosition(toX);
             target.setYPosition(toY);
+            setCreatorTurn(!isCreatorTurn()); // Change turn
         }
+
         return target;
     }
 
