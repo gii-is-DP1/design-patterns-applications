@@ -12,6 +12,7 @@ function Match() {
     const [matchName , setMatchName] = useState("");
 
     const [pieces, setPieces] = useState([]);
+    const [movements, setMovements] = useState([]);
 
     const [color, setColor] = useState();
 
@@ -83,6 +84,7 @@ function Match() {
                 // Handle the response, setting pieces or match state as needed
                 setMatchName(json.name);
                 setPieces(json.board.pieces);
+                setMovements(json.commandsHistory);
                 navigate("/matches/"+json.id,{ replace: true} );
                 setInicializado("true");
             })
@@ -95,6 +97,7 @@ function Match() {
                 .then(json => {
                     setMatchName(json.name);
                     setPieces(json.board.pieces);
+                    setMovements(json.commandsHistory);
                     setInicializado("true");
                 })
                 .catch(error => console.error("Error fetching match:", error));
@@ -126,6 +129,7 @@ function Match() {
                     setVisible(true);
                 } else {
                     setPieces(json.board.pieces);
+                    setMovements(json.commandsHistory);
                 }
             })
             .catch(error => console.error("Error fetching match:", error));
@@ -189,7 +193,7 @@ function Match() {
                 
                 <h1 id="msg"></h1>
 
-                <div style={{ marginTop: "100px" }}>
+                <div style={{ marginTop: "200px" }}>
                     <label>
                         From column:
                         <input type="number" name="fromX" min={1} max={8} value={fromX} onChange={(e) => {setFromX(e.target.value)}} />
@@ -208,7 +212,8 @@ function Match() {
                     </label>
                     <div>
                     <button onClick={mover}>Move!</button>    
-                </div>    
+                </div>
+                 
                 </div>
                     
                 <canvas id="canvas" width={800} height={800} onClick={oMousePos} style={{ marginTop: "1100px" }}> </canvas>
@@ -218,7 +223,17 @@ function Match() {
                         <p>
                             <DrawBoard />
                         </p>
+                        <div style={{ marginTop: "500px" }}>
+                            <h1>Match: {matchName}</h1>
+                            <h2>Movements history</h2>
+                            <ul>
+                                {movements.map((movement, index) => (
+                                    <li key={index}>{movement.piece.color} {movement.piece.type} from ({movement.fromX},{movement.fromY}) to ({movement.toX},{movement.toY})</li>
+                                ))}
+                            </ul>
+                        </div> 
                     </div>
+                    
                 }
             </div>
         </React.Fragment>

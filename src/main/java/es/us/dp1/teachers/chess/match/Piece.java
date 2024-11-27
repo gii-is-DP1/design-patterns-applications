@@ -1,5 +1,7 @@
 package es.us.dp1.teachers.chess.match;
 
+import org.jpatterns.gof.CommandPattern;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import es.us.dp1.teachers.chess.model.BaseEntity;
@@ -18,12 +20,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(of={"id"})
+@CommandPattern.Receiver
 public class Piece extends BaseEntity implements Cloneable{
-    
+
     @Min(1)
     @Max(8)
     Integer xPosition;
-    
+
     @Min(1)
     @Max(8)
     Integer yPosition;
@@ -34,7 +37,7 @@ public class Piece extends BaseEntity implements Cloneable{
 
     @Enumerated(EnumType.STRING)
     PieceType type;
-    
+
     @Enumerated(EnumType.STRING)
     PieceColor color;
 

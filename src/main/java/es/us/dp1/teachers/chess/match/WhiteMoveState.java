@@ -1,5 +1,6 @@
 package es.us.dp1.teachers.chess.match;
 
+import org.jpatterns.gof.CommandPattern;
 import org.jpatterns.gof.StatePattern;
 
 import es.us.dp1.teachers.chess.exceptions.IllegalMoveException;
@@ -14,6 +15,7 @@ import lombok.Setter;
 @Entity
 @DiscriminatorValue("WhiteMoveState")
 @StatePattern.ConcreteState
+@CommandPattern.Invoker
 public class WhiteMoveState extends State {
 
     @Override
@@ -25,8 +27,7 @@ public class WhiteMoveState extends State {
             if (target==null || target.getColor().equals(PieceColor.BLACK))
                 throw new IllegalMoveException("You cannot move other player's pieces");
             else {
-                target.setXPosition(toX);
-                target.setYPosition(toY);
+                match.executeCommand(new MovePieceCommand(target, fromX, fromY, toX, toY));
                 State nexState = new BlackMoveState();
                 nexState.setMatch(match);
                 match.setState(nexState);
