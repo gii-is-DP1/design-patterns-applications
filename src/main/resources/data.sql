@@ -186,8 +186,9 @@ INSERT INTO Piece(id, type, color, x_position, y_position, board_id) VALUES
 
 -- Test Game between player1 and player2
 INSERT INTO chess_board (id, creator_turn, jaque, current_turn_start) VALUES (100, 1, 0, null);
-INSERT INTO chess_match (id, name, creator_id, opponent_id, board_id, type, finish, start, turn_duration) VALUES 
-    (100, 'Test Game', 4, 5, 100, 0, null, null, 600);
+INSERT INTO state (id, dtype) VALUES (1, 'WhiteMoveState');
+INSERT INTO chess_match (id, name, creator_id, opponent_id, board_id, type, finish, start, turn_duration, state_id) VALUES 
+    (100, 'Test Game', 4, 5, 100, 0, null, null, 600, 1);
 
 -- Position for Test Game
 INSERT INTO Piece(id, type, color, x_position, y_position, board_id) VALUES 

@@ -3,6 +3,7 @@ package es.us.dp1.teachers.chess.match;
 import java.time.LocalDateTime;
 
 import org.jpatterns.gof.BuilderPattern;
+import org.jpatterns.gof.StatePattern;
 
 import es.us.dp1.teachers.chess.model.NamedEntity;
 import es.us.dp1.teachers.chess.user.User;
@@ -23,21 +24,29 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @BuilderPattern.Product
+@StatePattern.Context
 public class ChessMatch extends NamedEntity implements Cloneable{
     LocalDateTime start;
     LocalDateTime finish;
     Long turnDuration;
-    
+
     ChessMatchType type;
 
     @ManyToOne
     User creator;
-    
+
     @ManyToOne
     User opponent;
 
     @OneToOne(cascade = CascadeType.ALL)
     ChessBoard board;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    State state;
+
+    public void movePiece(User user, int fromX, int fromY, int toX, int toY) {
+        state.movePiece(user, fromX, fromY, toX, toY);
+    }
 
     public ChessMatch clone() {
         ChessMatch match = new ChessMatch();
@@ -49,7 +58,8 @@ public class ChessMatch extends NamedEntity implements Cloneable{
         match.setCreator(this.getCreator());
         match.setOpponent(this.getOpponent());
         match.setBoard(getBoard().clone());
+        match.setState(this.getState());
         return match;
     }
-    
+
 }

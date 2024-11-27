@@ -18,7 +18,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode(of={"id"})
 public class ChessBoard extends BaseEntity implements Cloneable{
-    boolean creatorTurn;
+    boolean creatorTurn; // Not necessary anymore because we have the state pattern
     LocalDateTime currentTurnStart;
     boolean jaque;
 
@@ -37,20 +37,6 @@ public class ChessBoard extends BaseEntity implements Cloneable{
                 return piece;
         }
         return null;
-    }
-
-    public Piece movePiece(int fromX, int fromY, int toX, int toY) {
-        Piece target = getPieceAt(fromX, fromY);
-        if(target!=null) {
-            if((target.getColor().equals(PieceColor.WHITE) && !isCreatorTurn()) ||
-                    (target.getColor().equals(PieceColor.BLACK) && isCreatorTurn()))
-                throw new IllegalMoveException("You cannot move other player's pieces");
-            target.setXPosition(toX);
-            target.setYPosition(toY);
-            setCreatorTurn(!isCreatorTurn()); // Change turn
-        }
-
-        return target;
     }
 
     public ChessBoard clone() {
