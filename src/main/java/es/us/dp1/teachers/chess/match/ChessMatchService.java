@@ -12,17 +12,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.us.dp1.teachers.chess.match.builder.ChessMatchBuilderDirector;
 import es.us.dp1.teachers.chess.user.User;
+import es.us.dp1.teachers.chess.user.UserService;
 
 @Service
 public class ChessMatchService {
 
     ChessMatchBuilderDirector builder;
     MatchRepository repo;
+    UserService userService;
 
     @Autowired
-    public ChessMatchService(MatchRepository repo, ChessMatchBuilderDirector builder) {
+    public ChessMatchService(MatchRepository repo, ChessMatchBuilderDirector builder, UserService userService) {
         this.repo = repo;
         this.builder = builder;
+        this.userService = userService;
     }
 
     @Transactional(readOnly = true)
@@ -57,6 +60,7 @@ public class ChessMatchService {
 
         ChessMatch result = builder.ofType(ChessMatchType.Standard)
                                     .withCreator(user)
+                                    .withOpponent(userService.findUser(5))
                                     .build();
         result=save(result);
         return result;
