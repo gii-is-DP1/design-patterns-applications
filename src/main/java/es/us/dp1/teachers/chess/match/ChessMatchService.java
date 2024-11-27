@@ -61,6 +61,7 @@ public class ChessMatchService {
 
         ChessMatch result = builder.ofType(ChessMatchType.Standard)
                                     .withCreator(user)
+                                    .withOpponent(userService.findUser(5))
                                     .build();
         result=save(result);
         return result;

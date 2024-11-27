@@ -21,7 +21,7 @@ public class StandardChessMatchBuilder extends AbstractChessMatchBuilder {
         match.setName(name);
         match.setCreator(creator);
         match.setOpponent(opponent);
-        match.setType(ChessMatchType.Standard);        
+        match.setType(ChessMatchType.Standard);                
         initializeMatch(match);
         return match;
     }
@@ -31,6 +31,7 @@ public class StandardChessMatchBuilder extends AbstractChessMatchBuilder {
     public void initializeMatch(ChessMatch match) {
         // Create a new ChessBoard for the match
         ChessBoard chessBoard = new ChessBoard();
+        chessBoard.setCreatorTurn(true);
         // Initialize the pieces on the chessboard
         initializePieces(chessBoard);
         // Associate the ChessBoard with the match
@@ -42,6 +43,7 @@ public class StandardChessMatchBuilder extends AbstractChessMatchBuilder {
             match.setStart(LocalDateTime.now());
         // Optionally set turn duration and other match properties
         match.setTurnDuration(600L); // 10 minutes per turn, example
+        
     }
 
     private void initializePieces(ChessBoard chessBoard) {
