@@ -3,7 +3,6 @@ package es.us.dp1.teachers.chess.match;
 import org.jpatterns.gof.CommandPattern;
 import org.jpatterns.gof.StatePattern;
 
-import es.us.dp1.teachers.chess.exceptions.IllegalMoveException;
 import es.us.dp1.teachers.chess.user.User;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -16,23 +15,23 @@ import lombok.Setter;
 @DiscriminatorValue("BlackMoveState")
 @StatePattern.ConcreteState
 @CommandPattern.Invoker
-public class BlackMoveState extends State {
+public class BlackMoveState extends ChessMatchState {
 
+   
     @Override
-    public void movePiece(User user, int fromX, int fromY, int toX, int toY) {
-        if(user.equals(match.getCreator()))
-            throw new IllegalMoveException("It is not your turn!");
-        else {
-            Piece target = match.getBoard().getPieceAt(fromX, fromY);
-            if (target==null || target.getColor().equals(PieceColor.WHITE))
-                throw new IllegalMoveException("You cannot move other player's pieces");
-            else {
-                match.executeCommand(new MovePieceCommand(target, fromX, fromY, toX, toY));
-                State nexState = new WhiteMoveState();
-                nexState.setMatch(match);
-                match.setState(nexState);
-            }
-        }
+    public User expectedMovingPlayer() {
+        return match.getOpponent();
     }
 
+    @Override
+    public ChessMatchState nextState() {
+        return new WhiteMoveState();
+    }
+
+    @Override
+    public PieceColor expectedTargetColor() {
+        return PieceColor.BLACK;
+    }
+
+    
 }

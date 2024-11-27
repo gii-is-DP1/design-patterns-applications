@@ -52,7 +52,7 @@ public class ChessMatch extends NamedEntity implements Cloneable{
     ChessBoard board;
 
     @OneToOne(cascade = CascadeType.ALL)
-    State state;
+    ChessMatchState state;
 
     @OneToMany(cascade = CascadeType.ALL)
     List<Command> commandsHistory;

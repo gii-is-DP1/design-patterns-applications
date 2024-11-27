@@ -8,9 +8,11 @@ import org.jpatterns.gof.BuilderPattern;
 import es.us.dp1.teachers.chess.match.ChessBoard;
 import es.us.dp1.teachers.chess.match.ChessMatch;
 import es.us.dp1.teachers.chess.match.ChessMatchType;
+import es.us.dp1.teachers.chess.match.ChessMatchState;
 import es.us.dp1.teachers.chess.match.Piece;
 import es.us.dp1.teachers.chess.match.PieceColor;
 import es.us.dp1.teachers.chess.match.PieceType;
+import es.us.dp1.teachers.chess.match.WhiteMoveState;
 import es.us.dp1.teachers.chess.user.User;
 
 @BuilderPattern.ConcreteBuilder(participants = {ChessMatch.class})
@@ -21,7 +23,7 @@ public class StandardChessMatchBuilder extends AbstractChessMatchBuilder {
         match.setName(name);
         match.setCreator(creator);
         match.setOpponent(opponent);
-        match.setType(ChessMatchType.Standard);        
+        match.setType(ChessMatchType.Standard);                
         initializeMatch(match);
         return match;
     }
@@ -31,6 +33,7 @@ public class StandardChessMatchBuilder extends AbstractChessMatchBuilder {
     public void initializeMatch(ChessMatch match) {
         // Create a new ChessBoard for the match
         ChessBoard chessBoard = new ChessBoard();
+        chessBoard.setCreatorTurn(true);
         // Initialize the pieces on the chessboard
         initializePieces(chessBoard);
         // Associate the ChessBoard with the match
@@ -42,6 +45,12 @@ public class StandardChessMatchBuilder extends AbstractChessMatchBuilder {
             match.setStart(LocalDateTime.now());
         // Optionally set turn duration and other match properties
         match.setTurnDuration(600L); // 10 minutes per turn, example
+        // Set the initial state of the match
+        ChessMatchState initialState = new WhiteMoveState();
+        match.setState(initialState);
+        initialState.setMatch(match);
+
+        
     }
 
     private void initializePieces(ChessBoard chessBoard) {
@@ -81,6 +90,6 @@ public class StandardChessMatchBuilder extends AbstractChessMatchBuilder {
             pawn.setBoard(chessBoard);
             chessBoard.getPieces().add(pawn);
         }
-    }                   
+    }
 
 }

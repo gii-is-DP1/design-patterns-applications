@@ -55,7 +55,7 @@ function Match() {
 
         // Pintamos las piezas:
         pieces.map(piece => {
-            var pieza = document.getElementById(piece.type + "-" + piece.color);            
+            var pieza = document.getElementById(piece.type + "-" + piece.color);
             if (pieza) {
                 pieza.style.display = 'block';
                 if (color === "BLACK") {
@@ -116,7 +116,7 @@ function Match() {
 
     const refresco = () => {
 
-     }
+    }
 
     const executeMove = (x1,y1,x2,y2) => {
         const token  = tokenService.getLocalAccessToken();
@@ -133,11 +133,11 @@ function Match() {
                 }
             })
             .catch(error => console.error("Error fetching match:", error));
-     }
+    }
 
-     const mover = () => {
+    const mover = () => {
         executeMove(fromX,fromY,toX,toY);;
-     }
+    }
 
 
     const oMousePos = (evt) => { 
@@ -226,12 +226,14 @@ function Match() {
                         <div style={{ marginTop: "500px" }}>
                             <h1>Match: {matchName}</h1>
                             <h2>Movements history</h2>
-                            <ul>
-                                {movements.map((movement, index) => (
-                                    <li key={index}>{movement.piece.color} {movement.piece.type} from ({movement.fromX},{movement.fromY}) to ({movement.toX},{movement.toY})</li>
-                                ))}
-                            </ul>
-                        </div> 
+                            {movements!=null &&
+                                <ul>
+                                    {movements.map((movement, index) => (
+                                        <li key={index}>{movement.piece.color} {movement.piece.type} from ({movement.fromX},{movement.fromY}) to ({movement.toX},{movement.toY})</li>
+                                    ))}
+                               </ul>
+                            }
+                        </div>
                     </div>
                     
                 }
