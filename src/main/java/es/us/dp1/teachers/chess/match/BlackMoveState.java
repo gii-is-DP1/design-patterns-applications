@@ -14,24 +14,22 @@ import lombok.Setter;
 @Entity
 @DiscriminatorValue("BlackMoveState")
 @StatePattern.ConcreteState
-public class BlackMoveState extends State {
+public class BlackMoveState extends ChessMatchState {
 
     @Override
-    public void movePiece(User user, int fromX, int fromY, int toX, int toY) {
-        if(user.equals(match.getCreator()))
-            throw new IllegalMoveException("It is not your turn!");
-        else {
-            Piece target = match.getBoard().getPieceAt(fromX, fromY);
-            if (target==null || target.getColor().equals(PieceColor.WHITE))
-                throw new IllegalMoveException("You cannot move other player's pieces");
-            else {
-                target.setXPosition(toX);
-                target.setYPosition(toY);
-                State nexState = new WhiteMoveState();
-                nexState.setMatch(match);
-                match.setState(nexState);
-            }
-        }
+    public PieceColor expectedTargetColor() {
+        return PieceColor.BLACK;
     }
 
+    @Override
+    public User expectedMovingPlayer() {
+        return match.getOpponent();
+    }
+
+    @Override
+    public ChessMatchState nextState() {
+        return new WhiteMoveState();
+    }
+
+    
 }

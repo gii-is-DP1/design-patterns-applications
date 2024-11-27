@@ -42,7 +42,7 @@ public class ChessMatch extends NamedEntity implements Cloneable{
     ChessBoard board;
 
     @OneToOne(cascade = CascadeType.ALL)
-    State state;
+    ChessMatchState state;
 
     public void movePiece(User user, int fromX, int fromY, int toX, int toY) {
         state.movePiece(user, fromX, fromY, toX, toY);
