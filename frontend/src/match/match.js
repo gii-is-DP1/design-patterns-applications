@@ -33,6 +33,7 @@ function Match() {
     const [fromY, setFromY] = useState();
     const [toX, setToX] = useState();
     const [toY, setToY] = useState();
+    const [firstClick, setFirstClick] = useState(false);
     
     const [message, setMessage] = useState(null);
     const [visible, setVisible] = useState(false);
@@ -114,9 +115,9 @@ function Match() {
 
      }
 
-    const mover = () => {
+    const executeMove = (x1,y1,x2,y2) => {
         const token  = tokenService.getLocalAccessToken();
-        let url = apiUrl + location.pathname + "/move?fromX=" + fromX + "&fromY=" + fromY + "&toX=" + toX + "&toY=" + toY;
+        let url = apiUrl + location.pathname + "/move?fromX=" + x1 + "&fromY=" + y1 + "&toX=" + x2 + "&toY=" + y2;
         fetch(url, {method: "PUT", headers: { "Authorization": `Bearer  ${token}`}})
             .then(response => response.json())
             .then(json => {
@@ -130,6 +131,11 @@ function Match() {
             .catch(error => console.error("Error fetching match:", error));
      }
 
+     const mover = () => {
+        executeMove(fromX,fromY,toX,toY);;
+     }
+
+
     const oMousePos = (evt) => { 
 
         var canvas = document.getElementById("canvas");
@@ -139,7 +145,16 @@ function Match() {
         var x1 = Math.floor(x / 100) + 1;
         var y1 = Math.floor(y / 100) + 1;
         console.log("x: " + x1 + " y: " + y1);
-        //mover(x1, y1);
+        if (!firstClick) {
+            setFromX(x1);
+            setFromY(y1);
+            setFirstClick(true);
+        } else {
+            setToX(x1);
+            setToY(y1);
+            setFirstClick(false);
+            executeMove(fromX,fromY,x1,y1);
+        }
     }
 
     async function InicioTurno() { }
