@@ -7,14 +7,12 @@ import es.us.dp1.teachers.chess.model.BaseEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode(of={"id"})
 public class ChessBoard extends BaseEntity{
     boolean creatorTurn;
     LocalDateTime currentTurnStart;
