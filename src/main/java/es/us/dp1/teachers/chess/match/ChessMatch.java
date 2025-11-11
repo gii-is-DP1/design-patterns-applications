@@ -2,21 +2,27 @@ package es.us.dp1.teachers.chess.match;
 
 import java.time.LocalDateTime;
 
+import org.jpatterns.gof.BuilderPattern;
+
 import es.us.dp1.teachers.chess.model.NamedEntity;
 import es.us.dp1.teachers.chess.user.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
-import lombok.EqualsAndHashCode;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode(of={"id"})
-public class ChessMatch extends NamedEntity implements Cloneable{
+@NoArgsConstructor
+@AllArgsConstructor
+@BuilderPattern.Product
+public class ChessMatch extends NamedEntity implements Cloneable {
+
     LocalDateTime start;
     LocalDateTime finish;
     Long turnDuration;
