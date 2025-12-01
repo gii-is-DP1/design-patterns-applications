@@ -49,6 +49,12 @@ public class MovePieceCommand extends Command {
     }
 
     @Override
+    public void undo() {
+        piece.setXPosition(fromX);
+        piece.setYPosition(fromY);
+    }
+
+    @Override
     public String toString() {
         return piece.color + " " + piece.type.getName() + " from (" + fromX + ", " + fromY + ") to (" + toX + ", " + toY + ")";
     }

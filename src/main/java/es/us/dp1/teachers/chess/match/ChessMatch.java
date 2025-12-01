@@ -62,6 +62,14 @@ public class ChessMatch extends NamedEntity implements Cloneable{
         commandsHistory.add(command);
     }
 
+    public void undoLastCommand() {
+        if(commandsHistory.size()>0) {
+            Command command = commandsHistory.remove(commandsHistory.size()-1);
+            command.undo();
+        }
+        state = state.nextState(); // Revert to previous state (only works because we have 2 states!)
+    }
+
     public void movePiece(User user, int fromX, int fromY, int toX, int toY) {
         state.movePiece(user, fromX, fromY, toX, toY);
     }

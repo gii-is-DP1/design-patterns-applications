@@ -13,4 +13,7 @@ public abstract class Command extends BaseEntity{
     void execute() {
         throw new UnsupportedOperationException();
     }
+    void undo() {
+        throw new UnsupportedOperationException();
+    }
 }

@@ -92,4 +92,9 @@ public class ChessMatchService {
         save(match);
     }
 
+    @Transactional
+    public void undoLastMove(ChessMatch match) {
+        match.undoLastCommand();
+        save(match);
+    }
 }
