@@ -1,16 +1,14 @@
 package es.us.dp1.teachers.chess.match;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 import org.jpatterns.gof.BuilderPattern;
 import org.jpatterns.gof.CommandPattern;
 import org.jpatterns.gof.StatePattern;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import es.us.dp1.teachers.chess.model.NamedEntity;
 import es.us.dp1.teachers.chess.user.User;
@@ -19,7 +17,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -56,20 +53,37 @@ public class ChessMatch extends NamedEntity implements Cloneable{
     List<Command> commandsHistory;
 
     public void executeCommand(Command command) {
+        ensureCommandsHistory();
         command.execute();
         commandsHistory.add(command);
     }
 
     public void undoLastCommand() {
-        if(commandsHistory.size()>0) {
+        if(commandsHistory != null && commandsHistory.size()>0) {
             Command command = commandsHistory.remove(commandsHistory.size()-1);
             command.undo();
+            state = state.nextState(); // Revert to previous state (only works because we have 2 states!)
         }
-        state = state.nextState(); // Revert to previous state (only works because we have 2 states!)
     }
 
     public void movePiece(User user, int fromX, int fromY, int toX, int toY) {
         state.movePiece(user, fromX, fromY, toX, toY);
+    }
+
+    @JsonProperty("commandsHistory")
+    public List<Command> getCommandsHistory() {
+        if (commandsHistory == null) {
+            return List.of();
+        }
+        return commandsHistory.stream()
+                .flatMap(command -> command.getInnerCommands().stream())
+                .toList();
+    }
+
+    private void ensureCommandsHistory() {
+        if (commandsHistory == null) {
+            commandsHistory = new ArrayList<>();
+        }
     }
 
     public ChessMatch clone() {
@@ -83,6 +97,7 @@ public class ChessMatch extends NamedEntity implements Cloneable{
         match.setOpponent(this.getOpponent());
         match.setBoard(getBoard().clone());
         match.setState(this.getState());
+        match.setCommandsHistory(new ArrayList<>());
         return match;
     }
 
