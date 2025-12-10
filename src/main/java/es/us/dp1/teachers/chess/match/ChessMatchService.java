@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.us.dp1.teachers.chess.exceptions.IllegalMoveException;
 import es.us.dp1.teachers.chess.match.builder.ChessMatchBuilderDirector;
 import es.us.dp1.teachers.chess.user.User;
 import es.us.dp1.teachers.chess.user.UserService;
@@ -89,11 +88,11 @@ public class ChessMatchService {
         User user = userService.findCurrentUser();
         match.movePiece(user, x1, y1, x2, y2);
         save(match);
-    }
+    }    
 
     @Transactional
     public void undoLastMove(ChessMatch match) {
         match.undoLastCommand();
         save(match);
-    }
+    }    
 }

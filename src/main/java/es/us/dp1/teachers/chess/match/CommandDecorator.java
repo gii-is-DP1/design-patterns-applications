@@ -1,7 +1,5 @@
 package es.us.dp1.teachers.chess.match;
 
-import java.util.List;
-
 import org.jpatterns.gof.DecoratorPattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -14,22 +12,31 @@ import jakarta.persistence.OneToOne;
 @DecoratorPattern.Decorator(participants = {Command.class})
 @Entity
 @Inheritance
-public abstract class CommandDecorator extends Command {
+public abstract class CommandDecorator extends MovePieceCommand {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JsonIgnore
     protected Command wrappedCommand;
-
-    protected CommandDecorator() {
+    
+    public CommandDecorator() {
         super();
     }
-
-    protected CommandDecorator(Command wrappedCommand) {
+    
+    protected CommandDecorator(Piece piece, int fromX, int fromY, int toX, int toY, Command wrappedCommand) {
+        super(piece, fromX, fromY, toX, toY);
         this.wrappedCommand = wrappedCommand;
     }
 
-    @Override
-    public List<Command> getInnerCommands() {
-        return wrappedCommand != null ? wrappedCommand.getInnerCommands() : List.of();
+    public void execute(){
+        super.execute();
+        if (wrappedCommand != null) 
+            wrappedCommand.execute();        
     }
+
+    public void undo(){
+        super.undo();
+        if (wrappedCommand != null) 
+            wrappedCommand.undo();        
+    }
+    
 }

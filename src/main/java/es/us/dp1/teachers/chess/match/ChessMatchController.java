@@ -65,9 +65,11 @@ public class ChessMatchController {
 
     @PutMapping("/{id}/move")
     public ChessMatch movePiece(@PathVariable("id") Integer matchId, @RequestParam("fromX") int fromX, @RequestParam("fromY") int fromY, @RequestParam("toX") int toX, @RequestParam("toY") int toY) {
-        ChessMatch match=getMatch(matchId);
+        ChessMatch match=getMatch(matchId);        
         matchService.movePiece(match, fromX, fromY, toX, toY);
         return match;
     }
+
+    
 
 }

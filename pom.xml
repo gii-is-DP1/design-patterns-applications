@@ -25,7 +25,7 @@
 		<lombok.version>1.18.38</lombok.version>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 
-		<jacoco.version>0.8.8</jacoco.version>
+		<jacoco.version>0.8.12</jacoco.version>
 		<spring-format.version>0.0.19</spring-format.version>
 
 		<frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>

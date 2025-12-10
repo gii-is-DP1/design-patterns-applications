@@ -33,7 +33,14 @@ public abstract class ChessMatchState extends BaseEntity {
             if (target==null || !target.getColor().equals(expectedTargetColor()))
                 throw new IllegalMoveException("You cannot move other player's pieces");
             else {
-                Command command = buildCommandForMove(target, fromX, fromY, toX, toY);
+                boolean castlingMove = isCastlingMove(target, fromX, fromY, toX, toY);
+                Piece destinationPiece = match.getBoard().validateDestination(target, toX, toY);
+                if (castlingMove && destinationPiece != null) {
+                    throw new IllegalMoveException("Castling destination must be empty");
+                }
+                target.getType().validateMove(target, destinationPiece, fromX, fromY, toX, toY);
+                match.getBoard().validatePathClear(target, fromX, fromY, toX, toY);
+                Command command = buildCommandForMove(target, destinationPiece, fromX, fromY, toX, toY);
                 match.executeCommand(command);
                 ChessMatchState nexState = nextState();
                 nexState.setMatch(match);
@@ -42,15 +49,17 @@ public abstract class ChessMatchState extends BaseEntity {
         }
     }
 
-    protected Command buildCommandForMove(Piece target, int fromX, int fromY, int toX, int toY) {
+    protected Command buildCommandForMove(Piece target, Piece destinationPiece, int fromX, int fromY, int toX, int toY) {
         if (isCastlingMove(target, fromX, fromY, toX, toY)) {
             return createCastlingCommand(target, fromX, fromY, toX, toY);
         }
-        MovePieceCommand baseMove = new MovePieceCommand(target, fromX, fromY, toX, toY);
         if (isPromotionMove(target, toY)) {
-            return new PromotionCommand(baseMove, PieceType.QUEEN);
+            return new PromotionCommand(target,  fromX, fromY,  toX, toY, PieceType.QUEEN, destinationPiece);
         }
-        return baseMove;
+        if (destinationPiece != null) {
+            return new CaptureCommand(target, destinationPiece, fromX, fromY, toX, toY);
+        }
+        return new MovePieceCommand(target, fromX, fromY, toX, toY);
     }
 
     private boolean isPromotionMove(Piece target, int toY) {
@@ -71,9 +80,13 @@ public abstract class ChessMatchState extends BaseEntity {
             throw new IllegalMoveException("Castling requires an unmoved rook on the same rank");
         }
         int rookToX = toX > fromX ? toX - 1 : toX + 1;
-        MovePieceCommand kingMove = new MovePieceCommand(king, fromX, fromY, toX, toY);
+        Piece rookDestination = match.getBoard().validateDestination(rook, rookToX, toY);
+        if (rookDestination != null) {
+            throw new IllegalMoveException("Castling squares must be empty");
+        }
+        match.getBoard().validatePathClear(rook, rookFromX, fromY, rookToX, toY);
         MovePieceCommand rookMove = new MovePieceCommand(rook, rookFromX, fromY, rookToX, toY);
-        return new CastlingCommand(kingMove, rookMove);
+        return new CastlingCommand(king, fromX, fromY, toX, toY, rookMove);
     }
 
     public abstract PieceColor expectedTargetColor();

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.jpatterns.gof.CommandPattern;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import es.us.dp1.teachers.chess.model.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
@@ -17,11 +19,18 @@ public abstract class Command extends BaseEntity{
 
     public abstract void undo();
 
-    /**
-     * Returns the list of atomic commands that were executed.
-     * Decorators can override this to expose the internal sequence.
-     */
-    public List<Command> getInnerCommands() {
-        return List.of(this);
+    public MoveType getMoveType() {
+        return MoveType.STANDARD;
     }
+
+    @JsonProperty("moveType")
+    public String getMoveTypeName() {
+        return getMoveType().name();
+    }
+
+    @JsonProperty("description")
+    public String getDescription() {
+        return toString();
+    }
+    
 }

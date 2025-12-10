@@ -75,9 +75,7 @@ public class ChessMatch extends NamedEntity implements Cloneable{
         if (commandsHistory == null) {
             return List.of();
         }
-        return commandsHistory.stream()
-                .flatMap(command -> command.getInnerCommands().stream())
-                .toList();
+        return commandsHistory;
     }
 
     private void ensureCommandsHistory() {

@@ -18,7 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @CommandPattern.Receiver
-public class Piece extends BaseEntity implements Cloneable{
+public class Piece extends BaseEntity implements Cloneable {
 
     @Min(1)
     @Max(8)
@@ -38,6 +38,17 @@ public class Piece extends BaseEntity implements Cloneable{
     @Enumerated(EnumType.STRING)
     PieceColor color;
 
+    public Piece() { 
+        super();       
+    }
+
+    public Piece(PieceColor color, PieceType type, int X, int Y) {
+        this.color = color;
+        this.type = type;
+        this.xPosition = X;
+        this.yPosition = Y;   
+    }
+
     public Piece clone() {
         Piece piece = new Piece();
         piece.setXPosition(this.getXPosition());
@@ -47,3 +58,4 @@ public class Piece extends BaseEntity implements Cloneable{
         return piece;
     }
 }
+

@@ -3,9 +3,39 @@ import tokenService from '../services/token.service';
 import getErrorModal from '../util/getErrorModal'
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router";
+import useIntervalFetchState from '../util/useIntervalFetchState';
 import './Game.css';
 
 const apiUrl = "/api/v1";
+
+function formatPiece(move) {
+    if (!move || !move.piece) return 'Piece';
+    return `${move.piece.color} ${move.piece.type}`;
+}
+
+const moveRenderers = [
+    {
+        canRender: (move) => move.moveType === "CASTLING",
+        render: (move) => move.description || `Castling: ${formatPiece(move)} from (${move.fromX},${move.fromY}) to (${move.toX},${move.toY})`
+    },
+    {
+        canRender: (move) => move.moveType === "PROMOTION",
+        render: (move) => move.description || `Promotion: ${formatPiece(move)} to ${move.promotionType || 'QUEEN'} at (${move.toX},${move.toY})`
+    },
+    {
+        canRender: (move) => move.moveType === "CAPTURE",
+        render: (move) => move.description || `${formatPiece(move)} captures on (${move.toX},${move.toY})`
+    },
+    {
+        canRender: () => true,
+        render: (move) => move.description || `${formatPiece(move)} from (${move.fromX},${move.fromY}) to (${move.toX},${move.toY})`
+    }
+];
+
+const compositeRenderMove = (move) => {
+    const renderer = moveRenderers.find(r => r.canRender(move));
+    return renderer ? renderer.render(move) : '';
+}
 
 function Match() {
 
@@ -41,7 +71,10 @@ function Match() {
 
     const location = useLocation();
     const navigate = useNavigate();
-    
+    const token  = tokenService.getLocalAccessToken();
+
+    const matchUrl = location.pathname === "/matches/new" ? null : apiUrl + location.pathname;
+    const [fetchedMatch, setFetchedMatch] = useIntervalFetchState(null, matchUrl, token, setMessage, setVisible,null,2000);
 
 
     const DrawBoard = () => {
@@ -70,43 +103,28 @@ function Match() {
         })
     }
 
-    const partida = () => {
-        const token  = tokenService.getLocalAccessToken();
-
-        // Check if the URL is `/matches/new`
+    useEffect(() => {
         if (location.pathname === "/matches/new") {
-            // If it's `/matches/new`, make a POST request to create a new match
             fetch("/api/v1/matches", {
                 method: "POST", headers: {"Content-Type": "application/json", "Authorization": `Bearer ${token}`}
             })
             .then(response => response.json())
             .then(json => {
-                // Handle the response, setting pieces or match state as needed
-                setMatchName(json.name);
-                setPieces(json.board.pieces);
-                setMovements(json.commandsHistory);
+                setFetchedMatch(json);
                 navigate("/matches/"+json.id,{ replace: true} );
-                setInicializado("true");
             })
             .catch(error => console.error("Error creating match:", error));
-        } else {
-
-            let url = apiUrl + location.pathname;
-            fetch(url, {headers: { "Authorization": `Bearer  ${token}`}})
-                .then(response => response.json())
-                .then(json => {
-                    setMatchName(json.name);
-                    setPieces(json.board.pieces);
-                    setMovements(json.commandsHistory);
-                    setInicializado("true");
-                })
-                .catch(error => console.error("Error fetching match:", error));
-            }
-    }
+        }
+    }, [location.pathname, navigate, setFetchedMatch, token]);
 
     useEffect(() => {
-        partida();
-    }, [])
+        if (fetchedMatch) {
+            setMatchName(fetchedMatch.name);
+            setPieces(fetchedMatch.board ? fetchedMatch.board.pieces : []);
+            setMovements(fetchedMatch.commandsHistory || []);
+            setInicializado("true");
+        }
+    }, [fetchedMatch]);
 
     const handleSubmit = (e) => { e.preventDefault(); }
 
@@ -122,17 +140,21 @@ function Match() {
         const token  = tokenService.getLocalAccessToken();
         let url = apiUrl + location.pathname + "/move?fromX=" + x1 + "&fromY=" + y1 + "&toX=" + x2 + "&toY=" + y2;
         fetch(url, {method: "PUT", headers: { "Authorization": `Bearer  ${token}`}})
-            .then(response => response.json())
-            .then(json => {
-                if (json.message) {
-                    setMessage(json.message);
+            .then(async response => {
+                const json = await response.json();
+                if (!response.ok || json.message) {
+                    setMessage(json.message || "Invalid move");
                     setVisible(true);
-                } else {
-                    setPieces(json.board.pieces);
-                    setMovements(json.commandsHistory);
+                    return;
                 }
+                setPieces(json.board.pieces);
+                setMovements(json.commandsHistory);
             })
-            .catch(error => console.error("Error fetching match:", error));
+            .catch(error => {
+                console.error("Error fetching match:", error);
+                setMessage("Unable to process move");
+                setVisible(true);
+            });
     }
 
     const mover = () => {
@@ -229,7 +251,7 @@ function Match() {
                             {movements!=null &&
                                 <ul>
                                     {movements.map((movement, index) => (
-                                        <li key={index}>{movement.piece.color} {movement.piece.type} from ({movement.fromX},{movement.fromY}) to ({movement.toX},{movement.toY})</li>
+                                        <li key={index}>{compositeRenderMove(movement)}</li>
                                     ))}
                                </ul>
                             }
