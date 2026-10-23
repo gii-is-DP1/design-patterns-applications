@@ -31,8 +31,8 @@ import lombok.EqualsAndHashCode;
  * @author Ken Krebs
  * @author Juergen Hoeller
  */
-@EqualsAndHashCode(of={"id"})
 @MappedSuperclass
+@EqualsAndHashCode(of="id")
 public class BaseEntity {
 
 	@Id

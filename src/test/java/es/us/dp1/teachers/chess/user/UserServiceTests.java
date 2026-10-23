@@ -1,6 +1,6 @@
 package es.us.dp1.teachers.chess.user;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -16,8 +16,13 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.us.dp1.teachers.chess.exceptions.ResourceNotFoundException;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
 
-//@DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
+@Epic("Users & Admin Module")
+@Feature("Users Management")
+@Owner("DP1-tutors")
 @SpringBootTest
 @AutoConfigureTestDatabase
 class UserServiceTests {
@@ -66,7 +71,7 @@ class UserServiceTests {
 
 		List<User> admins = (List<User>) this.userService.findAllByAuthority("ADMIN");
 		assertEquals(1, admins.size());
-		
+
 		List<User> vets = (List<User>) this.userService.findAllByAuthority("VET");
 		assertEquals(0, vets.size());
 	}
@@ -74,7 +79,7 @@ class UserServiceTests {
 	@Test
 	void shouldNotFindUserByIncorrectUsername() {
 		assertThrows(ResourceNotFoundException.class, () -> this.userService.findUser("usernotexists"));
-	}		
+	}
 
 	@Test
 	void shouldFindSingleUser() {
@@ -126,7 +131,7 @@ class UserServiceTests {
 		int finalCount = ((Collection<User>) this.userService.findAll()).size();
 		assertEquals(count + 1, finalCount);
 	}
-		
+
 
 //	@Test
 //	@Transactional
@@ -154,7 +159,7 @@ class UserServiceTests {
 //		assertEquals(firstCount, lastCount);
 //	}
 
-	
+
 
 //	@Test
 //	@Transactional

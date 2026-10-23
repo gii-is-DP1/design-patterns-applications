@@ -21,6 +21,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
+import es.us.dp1.teachers.chess.auth.payload.request.LoginRequest;
+import es.us.dp1.teachers.chess.configuration.jwt.JwtUtils;
+import es.us.dp1.teachers.chess.configuration.services.UserDetailsImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
@@ -30,17 +33,20 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import es.us.dp1.teachers.chess.auth.payload.request.LoginRequest;
 import es.us.dp1.teachers.chess.auth.payload.request.SignupRequest;
-import es.us.dp1.teachers.chess.configuration.jwt.JwtUtils;
-import es.us.dp1.teachers.chess.configuration.services.UserDetailsImpl;
 import es.us.dp1.teachers.chess.user.UserService;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
 
 /**
- * Test class for {@link OwnerRestController}
+ * Test class for {@link AuthController}
  *
  */
 
+ @Epic("Users & Admin Module")
+ @Feature("Authentication")
+ @Owner("DP1-tutors")
 @WebMvcTest(value = AuthController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = {
 		SecurityAutoConfiguration.class })
 class AuthControllerTests {
@@ -95,6 +101,7 @@ class AuthControllerTests {
 
 		token = "JWT TOKEN";
 	}
+
 
 	@Test
 	void shouldAuthenticateUser() throws Exception {
