@@ -1,4 +1,5 @@
 .settings/*
+.allure/*
 .classpath
 .project
 .factorypath
@@ -6,6 +7,7 @@
 .idea
 *.iml
 target/*
+target/site/jacoco/*
 target/jacoco.exec
 target/*.jar
 target/*.jar.original
@@ -24,6 +26,13 @@ target/site/*.html
 target/site/jacoco/*.csv
 target/site/jacoco/*.xml
 target/site/jacoco/jacoco-sessions.html
+target/site/allure-maven-plugin
+target/site/allure-results
+
+# Reporte de cobertura JaCoCo copiado a docs/deliverables (generado por mvn install)
+docs/deliverables/D3/coverage/
+docs/deliverables/D3/status/
+
 .sts4-cache/
 .vscode/*
 !.vscode/settings.json
@@ -88,5 +97,4 @@ _site/
 /.apt_generated/
 coverage/jacoco.xml
 .gitignore
-package-lock.json
-target/site/jacoco/**
+!frontend/package-lock.json

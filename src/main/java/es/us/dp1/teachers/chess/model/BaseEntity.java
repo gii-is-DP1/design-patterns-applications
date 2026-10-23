@@ -32,7 +32,7 @@ import lombok.EqualsAndHashCode;
  * @author Juergen Hoeller
  */
 @MappedSuperclass
-@EqualsAndHashCode(of={"id"})
+@EqualsAndHashCode(of="id")
 public class BaseEntity {
 
 	@Id
