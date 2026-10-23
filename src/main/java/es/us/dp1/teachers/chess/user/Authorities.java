@@ -4,6 +4,7 @@ import es.us.dp1.teachers.chess.model.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +19,7 @@ public class Authorities extends BaseEntity{
 //	User user;
 	
 //	@Enumerated(EnumType.STRING)
-	@Column(length = 20)
+	@Column(length = 20, unique = true, nullable = false)
 	String authority;
 	
 	
