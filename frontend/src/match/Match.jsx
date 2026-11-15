@@ -114,8 +114,9 @@ function Match() {
     const refresco = () => { }
 
     const mover = async () => {
+        let match;
         try {
-        match = await matchesApi.movePiece(matchId, fromX, fromY, toX, toY);
+            match = await matchesApi.movePiece(matchId, fromX, fromY, toX, toY);
         if (match.message) {
             showError(match.message);
         } else {
