@@ -18,13 +18,15 @@ package es.us.dp1.teachers.chess.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.EqualsAndHashCode;
 
 /**
  * Simple JavaBean domain object representing an person.
  *
  * @author Ken Krebs
  */
-@MappedSuperclass
+
+ @MappedSuperclass	
 public class Person extends BaseEntity {
 
 	@Column(name = "first_name")

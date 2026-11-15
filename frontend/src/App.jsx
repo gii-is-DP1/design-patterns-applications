@@ -1,0 +1,90 @@
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import { ErrorBoundary } from "react-error-boundary";
+import AppNavbar from "./AppNavbar";
+import Home from "./home";
+import PrivateRoute from "./privateRoute";
+import Register from "./auth/register";
+import Login from "./auth/login";
+import Logout from "./auth/logout";
+import PlanList from "./public/plan";
+import useAuth from "./hooks/useAuth";
+import UserListAdmin from "./admin/users/UserListAdmin";
+import UserEditAdmin from "./admin/users/UserEditAdmin";
+import SwaggerDocs from "./public/swagger";
+import Match from "./match/Match";
+import ChessMatchList from "./match/MatchListing";
+
+function ErrorFallback({ error, resetErrorBoundary }) {
+  return (
+    <div role="alert">
+      <p>Something went wrong:</p>
+      <pre>{error.message}</pre>
+      <button onClick={resetErrorBoundary}>Try again</button>
+    </div>
+  )
+}
+
+function App() {
+  const { jwt, roles } = useAuth();
+
+  let adminRoutes = <></>;
+  let playerRoutes = <></>;
+  let userRoutes = <></>;
+  let publicRoutes = <></>;
+
+  roles.forEach((role) => {
+    if (role === "ADMIN") {
+      adminRoutes = (
+        <>
+          <Route path="/users" exact={true} element={<PrivateRoute><UserListAdmin /></PrivateRoute>} />
+          <Route path="/users/:id" exact={true} element={<PrivateRoute><UserEditAdmin /></PrivateRoute>} />
+        </>)
+    }
+    if (role === "PLAYER") {
+      playerRoutes = (
+        <>
+          
+        </>)
+    }    
+  })
+  if (!jwt) {
+    publicRoutes = (
+      <>        
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/matches/:match" element={<Match />} />
+        <Route path="/matches" element={<ChessMatchList />} />
+      </>
+    )
+  } else {
+    userRoutes = (
+      <>
+        {/* <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} /> */}        
+        <Route path="/logout" element={<Logout />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/matches/:match" element={<Match />} />
+        <Route path="/matches" element={<ChessMatchList />} />
+      </>
+    )
+  }
+
+  return (
+    <div>
+      <ErrorBoundary FallbackComponent={ErrorFallback} >
+        <AppNavbar />
+        <Routes>
+          <Route path="/" exact={true} element={<Home />} />
+          <Route path="/plans" element={<PlanList />} />
+          <Route path="/docs" element={<SwaggerDocs />} />
+          {publicRoutes}
+          {userRoutes}
+          {adminRoutes}
+          {playerRoutes}
+        </Routes>
+      </ErrorBoundary>
+    </div>
+  );
+}
+
+export default App;
