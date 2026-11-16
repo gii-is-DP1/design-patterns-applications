@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,16 +33,25 @@ import es.us.dp1.teachers.chess.exceptions.ResourceNotFoundException;
 @Service
 public class UserService {
 
-	private UserRepository userRepository;	
+	private UserRepository userRepository;
+	private PasswordEncoder passwordEncoder;
 
 	@Autowired
-	public UserService(UserRepository userRepository) {
+	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
-		
+		this.passwordEncoder = passwordEncoder;
+
 	}
 
+	/**
+	 * Saves a user. The password of a new user is received in plain text and encoded here.
+	 * An existing user already stores the encoded password, so it is not encoded again
+	 * (re-saving a user must not change its password); use updateUser to change it.
+	 */
 	@Transactional
 	public User saveUser(User user) throws DataAccessException {
+		if (user.isNew())
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userRepository.save(user);
 		return user;
 	}
@@ -55,7 +65,7 @@ public class UserService {
 	@Transactional(readOnly = true)
 	public User findUser(Integer id) {
 		return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
-	}	
+	}
 
 	@Transactional(readOnly = true)
 	public User findCurrentUser() {
@@ -89,7 +99,10 @@ public class UserService {
 	@Transactional
 	public User updateUser(@Valid User user, Integer idToUpdate) {
 		User toUpdate = findUser(idToUpdate);
-		BeanUtils.copyProperties(user, toUpdate, "id");
+		BeanUtils.copyProperties(user, toUpdate, "id", "password");
+		if (user.getPassword() != null && !user.getPassword().isBlank()) {
+			toUpdate.setPassword(passwordEncoder.encode(user.getPassword()));
+		}
 		userRepository.save(toUpdate);
 
 		return toUpdate;
@@ -98,10 +111,8 @@ public class UserService {
 	@Transactional
 	public void deleteUser(Integer id) {
 		User toDelete = findUser(id);
-//		deleteRelations(id, toDelete.getAuthority().getAuthority());
-//		this.userRepository.deletePlayerRelation(id);
 		this.userRepository.delete(toDelete);
 	}
-	
+
 
 }

@@ -1,6 +1,8 @@
 package es.us.dp1.teachers.chess.user;
 
 import es.us.dp1.teachers.chess.model.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -19,6 +21,8 @@ public class User extends BaseEntity {
 	@Column(unique = true)
 	String username;
 
+	// Accepted in request bodies but never included in responses, so the hash is never exposed to clients.
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	String password;
 
 	@NotNull

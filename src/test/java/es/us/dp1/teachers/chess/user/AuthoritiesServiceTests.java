@@ -1,6 +1,6 @@
 package es.us.dp1.teachers.chess.user;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -15,10 +15,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.us.dp1.teachers.chess.exceptions.ResourceNotFoundException;
-import es.us.dp1.teachers.chess.user.Authorities;
-import es.us.dp1.teachers.chess.user.AuthoritiesService;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
 
-//@DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
+@Epic("Users & Admin Module")
+@Feature("Authorization")
+@Owner("DP1-tutors")
 @SpringBootTest
 @AutoConfigureTestDatabase
 class AuthoritiesServiceTests {
@@ -61,16 +64,5 @@ class AuthoritiesServiceTests {
 		int finalCount = ((Collection<Authorities>) this.authService.findAll()).size();
 		assertEquals(count + 1, finalCount);
 	}
-
-//	@Test
-//	@Transactional
-//	void shouldAddAuthoritiesToUser() {
-//		User user = userService.findUser("owner1");
-//		assertEquals("OWNER" ,user.getAuthority().getAuthority());
-//		
-//		this.authService.saveAuthorities("owner1", "TEST");
-//		assertEquals("TEST" ,user.getAuthority().getAuthority());
-//
-//	}
 
 }

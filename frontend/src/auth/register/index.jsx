@@ -1,0 +1,92 @@
+import "../../static/css/auth/authButton.css";
+import "../../static/css/auth/authPage.css";
+import * as authApi from "../../services/auth";
+import tokenService from "../../services/token.service";
+import FormGenerator from "../../components/formGenerator/formGenerator";
+import { registerFormOwnerInputs } from "./form/registerFormOwnerInputs";
+import { registerFormClinicOwnerInputs } from "./form/registerFormClinicOwnerInputs";
+import { useRef, useState } from "react";
+
+export default function Register() {
+  let [type, setType] = useState(null);
+  let [authority, setAuthority] = useState(null);
+
+  const registerFormRef = useRef();
+
+  function handleButtonClick(event) {
+    const target = event.target;
+    let value = target.value;
+    if (value === "Back") value = null;
+    else setAuthority(value);
+    setType(value);
+  }
+
+  async function handleSubmit({ values }) {
+
+    if(!registerFormRef.current.validate()) return;
+
+    const request = { ...values, authority };
+
+    try {
+      await authApi.signup(request);
+      const data = await authApi.signin({
+        username: request.username,
+        password: request.password,
+      });
+      tokenService.setUser(data);
+      tokenService.updateLocalAccessToken(data.token);
+      window.location.href = "/dashboard";
+    } catch (err) {
+      alert(err.response?.data?.message ?? "Registration failed");
+    }
+  }
+
+  if (type) {
+    return (
+      <div className="auth-page-container">
+        <h1>Register</h1>
+        <div className="auth-form-container">
+          <FormGenerator
+            ref={registerFormRef}
+            inputs={
+              type === "Player" ? registerFormOwnerInputs               
+              : registerFormClinicOwnerInputs
+            }
+            onSubmit={handleSubmit}
+            numberOfColumns={1}
+            listenEnterKey
+            buttonText="Save"
+            buttonClassName="auth-button"
+          />
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="auth-page-container">
+        <div className="auth-form-container">
+          <h1>Register</h1>
+          <h2 className="text-center text-md">
+            What type of user will you be?
+          </h2>
+          <div className="options-row">
+            <button
+              className="auth-button"
+              value="Player"
+              onClick={handleButtonClick}
+            >
+              Player
+            </button>
+            <button
+              className="auth-button"
+              value="Admin"
+              onClick={handleButtonClick}
+            >
+              Admin
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}

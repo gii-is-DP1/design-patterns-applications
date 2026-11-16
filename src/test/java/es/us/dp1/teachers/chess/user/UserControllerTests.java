@@ -1,6 +1,6 @@
 package es.us.dp1.teachers.chess.user;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -22,6 +22,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
+import es.us.dp1.teachers.chess.exceptions.AccessDeniedException;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,12 +33,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import es.us.dp1.teachers.chess.configuration.SecurityConfiguration;
-import es.us.dp1.teachers.chess.exceptions.AccessDeniedException;
 import es.us.dp1.teachers.chess.exceptions.ResourceNotFoundException;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
 
 /**
  * Test class for the {@link VetController}
  */
+@Epic("Users & Admin Module")
+@Feature("Users Management")
+@Owner("DP1-tutors")
 @WebMvcTest(controllers = UserRestController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
 class UserControllerTests {
 
@@ -189,7 +195,7 @@ class UserControllerTests {
 
 		mockMvc.perform(put(BASE_URL + "/{id}", TEST_USER_ID).with(csrf()).contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(user))).andExpect(status().isOk())
-				.andExpect(jsonPath("$.username").value("UPDATED")).andExpect(jsonPath("$.password").value("CHANGED"));
+				.andExpect(jsonPath("$.username").value("UPDATED")).andExpect(jsonPath("$.password").doesNotExist());
 	}
 
 	@Test

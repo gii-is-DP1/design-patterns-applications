@@ -18,6 +18,7 @@ package es.us.dp1.teachers.chess.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.Size;
+import lombok.EqualsAndHashCode;
 
 /**
  * Simple JavaBean domain object adds a name property to <code>BaseEntity</code>. Used as
