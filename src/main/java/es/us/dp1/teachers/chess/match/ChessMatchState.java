@@ -1,5 +1,6 @@
 package es.us.dp1.teachers.chess.match;
 
+import org.jpatterns.gof.CommandPattern;
 import org.jpatterns.gof.StatePattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -19,11 +20,27 @@ import lombok.Setter;
 @Getter
 @Setter
 @StatePattern.State
-public abstract class ChessMatchState extends BaseEntity {
+@CommandPattern.Client // It creates the commands (MovePieceCommand) and passes them to the invoker (ChessMatch)
+public abstract class ChessMatchState extends BaseEntity implements Cloneable {
 
     @OneToOne(mappedBy = "state")
     @JsonIgnore
     protected ChessMatch match;
+
+    // Each match must have its own state (the relationship is one to one), so when a
+    // match is cloned we create a new state of the same concrete class (not persisted yet
+    // and not associated to any match).
+    @Override
+    public ChessMatchState clone() {
+        try {
+            ChessMatchState copy = (ChessMatchState) super.clone();
+            copy.setId(null);
+            copy.setMatch(null);
+            return copy;
+        } catch (CloneNotSupportedException e) {
+            throw new IllegalStateException(e);
+        }
+    }
 
     public void movePiece(User user, int fromX, int fromY, int toX, int toY) {
         if(!user.equals(expectedMovingPlayer()))
@@ -34,9 +51,7 @@ public abstract class ChessMatchState extends BaseEntity {
                 throw new IllegalMoveException("You cannot move other player's pieces");
             else {
                 match.executeCommand(new MovePieceCommand(target, fromX, fromY, toX, toY));
-                ChessMatchState nexState = nextState();
-                nexState.setMatch(match);
-                match.setState(nexState);
+                match.changeState(nextState());
             }
         }
     }

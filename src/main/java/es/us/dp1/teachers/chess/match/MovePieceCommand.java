@@ -2,11 +2,8 @@ package es.us.dp1.teachers.chess.match;
 
 import org.jpatterns.gof.CommandPattern;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import es.us.dp1.teachers.chess.model.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;

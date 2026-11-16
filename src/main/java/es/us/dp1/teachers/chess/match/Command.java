@@ -10,10 +10,6 @@ import jakarta.persistence.Inheritance;
 @Entity
 @Inheritance
 public abstract class Command extends BaseEntity{
-    void execute() {
-        throw new UnsupportedOperationException();
-    }
-    void undo() {
-        throw new UnsupportedOperationException();
-    }
+    public abstract void execute();
+    public abstract void undo();
 }

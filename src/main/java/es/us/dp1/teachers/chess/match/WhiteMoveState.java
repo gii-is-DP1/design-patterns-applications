@@ -1,9 +1,7 @@
 package es.us.dp1.teachers.chess.match;
 
-import org.jpatterns.gof.CommandPattern;
 import org.jpatterns.gof.StatePattern;
 
-import es.us.dp1.teachers.chess.exceptions.IllegalMoveException;
 import es.us.dp1.teachers.chess.user.User;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -15,7 +13,6 @@ import lombok.Setter;
 @Entity
 @DiscriminatorValue("WhiteMoveState")
 @StatePattern.ConcreteState
-
 public class WhiteMoveState extends ChessMatchState {   
 
     @Override

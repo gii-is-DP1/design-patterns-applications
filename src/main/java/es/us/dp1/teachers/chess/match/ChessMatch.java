@@ -1,17 +1,14 @@
 package es.us.dp1.teachers.chess.match;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 import org.jpatterns.gof.BuilderPattern;
 import org.jpatterns.gof.CommandPattern;
 import org.jpatterns.gof.StatePattern;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
+import es.us.dp1.teachers.chess.exceptions.IllegalMoveException;
 import es.us.dp1.teachers.chess.model.NamedEntity;
 import es.us.dp1.teachers.chess.user.User;
 import jakarta.persistence.CascadeType;
@@ -19,7 +16,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +28,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @BuilderPattern.Product
 @StatePattern.Context
-@CommandPattern.Client
+@CommandPattern.Invoker // It executes the commands and keeps the history (to undo them)
 public class ChessMatch extends NamedEntity implements Cloneable{
     LocalDateTime start;
     LocalDateTime finish;
@@ -49,11 +45,13 @@ public class ChessMatch extends NamedEntity implements Cloneable{
     @OneToOne(cascade = CascadeType.ALL)
     ChessBoard board;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    // orphanRemoval: the previous state is deleted from the DB when the match changes its state
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     ChessMatchState state;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    List<Command> commandsHistory;
+    // orphanRemoval: an undone command is deleted from the DB
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Command> commandsHistory = new ArrayList<>();
 
     public void executeCommand(Command command) {
         command.execute();
@@ -61,15 +59,20 @@ public class ChessMatch extends NamedEntity implements Cloneable{
     }
 
     public void undoLastCommand() {
-        if(commandsHistory.size()>0) {
-            Command command = commandsHistory.remove(commandsHistory.size()-1);
-            command.undo();
-        }
-        state = state.nextState(); // Revert to previous state (only works because we have 2 states!)
+        if(commandsHistory.isEmpty())
+            throw new IllegalMoveException("There are no movements to undo");
+        Command command = commandsHistory.remove(commandsHistory.size()-1);
+        command.undo();
+        changeState(state.nextState()); // Revert to previous state (only works because we have 2 states!)
     }
 
     public void movePiece(User user, int fromX, int fromY, int toX, int toY) {
         state.movePiece(user, fromX, fromY, toX, toY);
+    }
+
+    public void changeState(ChessMatchState newState) {
+        newState.setMatch(this);
+        this.state = newState;
     }
 
     public ChessMatch clone() {
@@ -82,7 +85,7 @@ public class ChessMatch extends NamedEntity implements Cloneable{
         match.setCreator(this.getCreator());
         match.setOpponent(this.getOpponent());
         match.setBoard(getBoard().clone());
-        match.setState(this.getState());
+        match.changeState(this.getState().clone()); // A new state for the new match
         return match;
     }
 
