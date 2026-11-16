@@ -39,11 +39,17 @@ public class ChessMatch extends NamedEntity implements Cloneable{
     @OneToOne(cascade = CascadeType.ALL)
     ChessBoard board;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    // orphanRemoval: the previous state is deleted from the DB when the match changes its state
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     ChessMatchState state;
 
     public void movePiece(User user, int fromX, int fromY, int toX, int toY) {
         state.movePiece(user, fromX, fromY, toX, toY);
+    }
+
+    public void changeState(ChessMatchState newState) {
+        newState.setMatch(this);
+        this.state = newState;
     }
 
     public ChessMatch clone() {
@@ -56,7 +62,7 @@ public class ChessMatch extends NamedEntity implements Cloneable{
         match.setCreator(this.getCreator());
         match.setOpponent(this.getOpponent());
         match.setBoard(getBoard().clone());
-        match.setState(this.getState());
+        match.changeState(this.getState().clone()); // A new state for the new match
         return match;
     }
 

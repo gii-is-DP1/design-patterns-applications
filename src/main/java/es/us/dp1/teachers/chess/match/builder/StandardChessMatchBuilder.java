@@ -8,7 +8,6 @@ import org.jpatterns.gof.BuilderPattern;
 import es.us.dp1.teachers.chess.match.ChessBoard;
 import es.us.dp1.teachers.chess.match.ChessMatch;
 import es.us.dp1.teachers.chess.match.ChessMatchType;
-import es.us.dp1.teachers.chess.match.ChessMatchState;
 import es.us.dp1.teachers.chess.match.Piece;
 import es.us.dp1.teachers.chess.match.PieceColor;
 import es.us.dp1.teachers.chess.match.PieceType;
@@ -46,9 +45,7 @@ public class StandardChessMatchBuilder extends AbstractChessMatchBuilder {
         // Optionally set turn duration and other match properties
         match.setTurnDuration(600L); // 10 minutes per turn, example
         // Set the initial state of the match
-        ChessMatchState initialState = new WhiteMoveState();
-        match.setState(initialState);
-        initialState.setMatch(match);
+        match.changeState(new WhiteMoveState());
 
         
     }

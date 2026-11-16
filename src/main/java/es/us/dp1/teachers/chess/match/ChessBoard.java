@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.us.dp1.teachers.chess.exceptions.IllegalMoveException;
 import es.us.dp1.teachers.chess.model.BaseEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;

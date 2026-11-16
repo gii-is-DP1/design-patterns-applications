@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.us.dp1.teachers.chess.exceptions.IllegalMoveException;
 import es.us.dp1.teachers.chess.match.builder.ChessMatchBuilderDirector;
 import es.us.dp1.teachers.chess.user.User;
 import es.us.dp1.teachers.chess.user.UserService;
